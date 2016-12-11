@@ -32,6 +32,12 @@ module.exports = {
     }
   },
   devServer: {
+    proxy: {
+      "/infobits": {
+        target: "http://localhost:8080/",
+        secure: false
+      }
+    },
     historyApiFallback: true,
     noInfo: true
   },

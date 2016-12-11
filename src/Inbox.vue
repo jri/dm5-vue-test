@@ -7,18 +7,20 @@
 </template>
 
 <script>
+import http from "axios"
+
 export default {
   data() {
     return {
-      infobits: [
-        {
-          title: "TTIP"
-        },
-        {
-          title: "Demokratie"
-        }
-      ]
+      infobits: []
     }
+  },
+  created() {
+    http.get("/infobits/inbox")
+      .then(response => this.infobits = response.data.infobits)
+      .catch(function(error) {
+        console.log("### Request failed", error);
+      })
   }
 }
 </script>
