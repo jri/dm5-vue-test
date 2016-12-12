@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <vue-tree-node :node="tree"></vue-tree-node>
+    <vue-tree-node :node="tree" :state="state"></vue-tree-node>
   </ul>
 </template>
 
@@ -8,7 +8,7 @@
 import VueTreeNode from "./vue-tree-node.vue"
 
 export default {
-  props: ["tree"],
+  props: ["tree", "state"],
   components: {
     VueTreeNode
   }

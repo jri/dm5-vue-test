@@ -1,6 +1,6 @@
 <template>
   <div id="toolbar">
-    <h1>Infobits 2</h1>
+    <h2>Infobits 2</h2>
     <login-dialog></login-dialog>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
   background-color: #eee;
 }
 
-#toolbar > h1 {
+#toolbar > h2 {
   flex: auto;
   margin: 0;
 }

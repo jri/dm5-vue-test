@@ -2,8 +2,9 @@
   <div id="infobits-app">
     <toolbar></toolbar>
     <div id="infobits-content">
-      <tree-panel></tree-panel>
-      <inbox></inbox>
+      <tree-panel   :state="state"></tree-panel>
+      <inbox        :state="state"></inbox>
+      <detail-panel :state="state"></detail-panel>
     </div>
   </div>
 </template>
@@ -12,12 +13,21 @@
 import Toolbar     from "./toolbar.vue"
 import TreePanel   from "./tree-panel.vue"
 import Inbox       from "./inbox.vue"
+import DetailPanel from "./detail-panel.vue"
 
 export default {
   components: {
     Toolbar,
     TreePanel,
-    Inbox
+    Inbox,
+    DetailPanel
+  },
+  data() {
+    return {
+      state: {
+        infobitId: undefined
+      }
+    }
   }
 }
 </script>
@@ -43,5 +53,9 @@ body {
   display: flex;
   flex: auto;
   min-height: 0;
+}
+
+.highlight {
+  background-color: yellow;
 }
 </style>

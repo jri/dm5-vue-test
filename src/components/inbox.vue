@@ -2,7 +2,10 @@
   <div id="inbox">
     <h3>Inbox</h3>
     <ul>
-      <li v-for="infobit in infobits">{{infobit.title}}</li>
+      <li v-for="infobit in infobits" @click="state.infobitId = infobit.id"
+                                      :class="{highlight: state.infobitId == infobit.id}">
+        {{infobit.title}}
+      </li>
     </ul>
   </div>
 </template>
@@ -11,6 +14,7 @@
 import http from "axios"
 
 export default {
+  props: ["state"],
   data() {
     return {
       infobits: []
