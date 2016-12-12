@@ -1,11 +1,13 @@
 import Vue from "vue"
-import Inbox from "./components/inbox.vue"
 import LoginDialog from "./components/login-dialog.vue"
+import UserSelect  from "./components/user-select.vue"
+import Inbox       from "./components/inbox.vue"
 
 new Vue({
   el: "#app",
   components: {
-    Inbox,
-    LoginDialog
+    LoginDialog,
+    UserSelect,
+    Inbox
   }
 })
