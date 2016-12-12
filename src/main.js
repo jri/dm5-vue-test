@@ -1,13 +1,13 @@
 import Vue from "vue"
 import LoginDialog from "./components/login-dialog.vue"
-import UserSelect  from "./components/user-select.vue"
+import TreePanel   from "./components/tree-panel.vue"
 import Inbox       from "./components/inbox.vue"
 
 new Vue({
   el: "#app",
   components: {
     LoginDialog,
-    UserSelect,
+    TreePanel,
     Inbox
   }
 })
