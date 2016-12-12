@@ -1,5 +1,6 @@
 <template>
   <div>
+    Login
     <input v-model="username" @keyup.enter="submit">
     <input v-model="password" @keyup.enter="submit">
     <span>{{message}}</span>

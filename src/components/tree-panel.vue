@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="tree-panel">
+    <h3>Tree</h3>
     <user-select></user-select>
     <vue-tree :tree="tree"></vue-tree>
   </div>
@@ -10,6 +11,10 @@ import UserSelect from "./user-select.vue"
 import VueTree    from "./vue-tree.vue"
 
 export default {
+  components: {
+    UserSelect,
+    VueTree
+  },
   data() {
     return {
       tree: {
@@ -81,13 +86,14 @@ export default {
         "collapsed": false
       }
     }
-  },
-  components: {
-    UserSelect,
-    VueTree
   }
 }
 </script>
 
 <style>
+#tree-panel {
+  flex: auto;
+  overflow: auto;
+  background-color: #fee
+}
 </style>

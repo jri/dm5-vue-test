@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="inbox">
+    <h3>Inbox</h3>
     <ul>
       <li v-for="infobit in infobits">{{infobit.title}}</li>
     </ul>
@@ -23,4 +24,9 @@ export default {
 </script>
 
 <style>
+#inbox {
+  flex: auto;
+  overflow: auto;
+  background-color: #efe;
+}
 </style>
