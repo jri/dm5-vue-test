@@ -1,5 +1,5 @@
 <template>
-  <div id="inbox">
+  <div>
     <ul>
       <li v-for="infobit in infobits">{{infobit.title}}</li>
     </ul>
@@ -18,9 +18,6 @@ export default {
   created() {
     http.get("/infobits/inbox")
       .then(response => this.infobits = response.data.infobits)
-      .catch(function(error) {
-        console.log("### Request failed", error);
-      })
   }
 }
 </script>

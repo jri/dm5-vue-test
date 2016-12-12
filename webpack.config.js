@@ -32,12 +32,12 @@ module.exports = {
     }
   },
   devServer: {
-    proxy: {
-      "/infobits": {
-        target: "http://localhost:8080/",
-        secure: false
+    proxy: [
+      {
+        context: ["/accesscontrol", "/infobits"],
+        target: "http://localhost:8080"
       }
-    },
+    ],
     historyApiFallback: true,
     noInfo: true
   },
