@@ -1,13 +1,7 @@
 import Vue from "vue"
-import LoginDialog from "./components/login-dialog.vue"
-import TreePanel   from "./components/tree-panel.vue"
-import Inbox       from "./components/inbox.vue"
+import InfobitsApp from "./components/infobits-app.vue"
 
 new Vue({
   el: "#app",
-  components: {
-    LoginDialog,
-    TreePanel,
-    Inbox
-  }
+  render: r => r(InfobitsApp)
 })
