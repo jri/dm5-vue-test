@@ -18,7 +18,7 @@ export default {
 <style>
 #toolbar {
   display: flex;
-  background-color: #eee;
+  background-color: #f8f8f8;
 }
 
 #toolbar > h2 {

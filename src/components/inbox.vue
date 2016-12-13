@@ -28,8 +28,8 @@ export default {
 
 <style>
 #inbox {
-  flex: auto;
+  flex-basis: 30%;
   overflow: auto;
-  background-color: #efe;
+  background-color: white;
 }
 </style>

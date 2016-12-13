@@ -1,14 +1,23 @@
 <template>
-  <div id="detail-panel">
-    <h3>Detail Panel</h1>
+  <div id="detail-panel" v-if="infobit">
+    <h3>{{infobit.title}}</h3>
+    <div v-html="infobit.details.text"></div>
   </div>
 </template>
 
 <script>
+import http from "axios"
+
 export default {
+  data() {
+    return {
+      infobit: undefined
+    }
+  },
   watch: {
-    "$root.$data.infobitId": function(newId) {
-      console.log("### detail-panel: infobitId", newId)
+    "$root.$data.infobitId": function(id) {
+      http.get("/infobits/infobit/" + id)
+        .then(response => this.infobit = response.data)
     }
   }
 }
@@ -16,8 +25,8 @@ export default {
 
 <style>
 #detail-panel {
-  flex: auto;
+  flex-basis: 30%;
   overflow: auto;
-  background-color: #eef;
+  background-color: white;
 }
 </style>

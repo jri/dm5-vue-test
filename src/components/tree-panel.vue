@@ -92,8 +92,8 @@ export default {
 
 <style>
 #tree-panel {
-  flex: auto;
+  flex-basis: 40%;
   overflow: auto;
-  background-color: #fee
+  background-color: white;
 }
 </style>
