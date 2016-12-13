@@ -2,8 +2,8 @@
   <div id="inbox">
     <h3>Inbox</h3>
     <ul>
-      <li v-for="infobit in infobits" @click="state.infobitId = infobit.id"
-                                      :class="{highlight: state.infobitId == infobit.id}">
+      <li v-for="infobit in infobits" @click="$root.$data.infobitId = infobit.id"
+                                      :class="{highlight: $root.$data.infobitId == infobit.id}">
         {{infobit.title}}
       </li>
     </ul>
@@ -14,7 +14,6 @@
 import http from "axios"
 
 export default {
-  props: ["state"],
   data() {
     return {
       infobits: []

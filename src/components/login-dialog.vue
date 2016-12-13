@@ -20,12 +20,10 @@ export default {
   },
   methods: {
     submit() {
-      http.post("/accesscontrol/login", undefined, {
-        auth: {
-          username: this.username,
-          password: this.password
-        }
-      })
+      http.post("/accesscontrol/login", undefined, {auth: {
+        username: this.username,
+        password: this.password
+      }})
       .then(response => this.message = "Login OK")
       .catch(error   => this.message = "Login failed")
     }

@@ -2,9 +2,9 @@
   <div id="infobits-app">
     <toolbar></toolbar>
     <div id="infobits-content">
-      <tree-panel   :state="state"></tree-panel>
-      <inbox        :state="state"></inbox>
-      <detail-panel :state="state"></detail-panel>
+      <tree-panel></tree-panel>
+      <inbox></inbox>
+      <detail-panel></detail-panel>
     </div>
   </div>
 </template>
@@ -21,13 +21,6 @@ export default {
     TreePanel,
     Inbox,
     DetailPanel
-  },
-  data() {
-    return {
-      state: {
-        infobitId: undefined
-      }
-    }
   }
 }
 </script>

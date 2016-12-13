@@ -6,9 +6,8 @@
 
 <script>
 export default {
-  props: ["state"],
   watch: {
-    "state.infobitId": function(newId) {
+    "$root.$data.infobitId": function(newId) {
       console.log("### detail-panel: infobitId", newId)
     }
   }

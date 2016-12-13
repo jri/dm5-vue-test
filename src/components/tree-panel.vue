@@ -2,7 +2,7 @@
   <div id="tree-panel">
     <h3>Tree</h3>
     <user-select></user-select>
-    <vue-tree :tree="tree" :state="state"></vue-tree>
+    <vue-tree :tree="tree"></vue-tree>
   </div>
 </template>
 
@@ -11,7 +11,6 @@ import UserSelect from "./user-select.vue"
 import VueTree    from "./vue-tree.vue"
 
 export default {
-  props: ["state"],
   components: {
     UserSelect,
     VueTree
