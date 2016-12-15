@@ -3,25 +3,26 @@
     <h3>{{infobit.title}}</h3>
     <div class="field" v-for="detail in types[infobit.type].details">
       <div class="label">{{detail.label}}</div>
-      <div v-if="detail.dataType == 'Text' ||
-                 detail.dataType == 'Number'">
-        {{infobit.details[detail.prop]}}
-      </div>
-      <div v-else-if="detail.dataType == 'HTML'" v-html="infobit.details[detail.prop]">
-      </div>
-      <div v-else class="error">
-        "{{detail.dataType}}" is an unsupported data type
-      </div>
+      <component :is="compName(detail)"
+        :mode="mode" :value="infobit.details[detail.prop]">
+      </component>
   </div>
 </template>
 
 <script>
 import http from "axios"
+import TextField   from "./data-fields/text-field.vue"
+import NumberField from "./data-fields/number-field.vue"
+import HtmlField   from "./data-fields/html-field.vue"
 
 export default {
+  components: {
+    TextField, NumberField, HtmlField
+  },
   data() {
     return {
       infobit: undefined,
+      mode: "info",   // "info" or "form"
       types: {
         "infobits.type.infobit": {
           titleLabel: "Infobit Title",
@@ -76,6 +77,9 @@ export default {
       }
     }
   },
+  methods: {
+    compName: detail => detail.dataType.toLowerCase() + '-field'
+  },
   watch: {
     "$root.$data.infobitId": function(id) {
       http.get("/infobits/infobit/" + id)
@@ -92,13 +96,12 @@ export default {
   background-color: white;
 }
 
+#detail-panel .field {
+  margin-top: 1em;
+}
+
 #detail-panel .field > .label {
   font-size: 75%;
   color: grey;
-}
-
-#detail-panel .error {
-  font-size: 75%;
-  color: red;
 }
 </style>

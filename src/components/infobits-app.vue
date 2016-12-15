@@ -17,10 +17,7 @@ import DetailPanel from "./detail-panel.vue"
 
 export default {
   components: {
-    Toolbar,
-    TreePanel,
-    Inbox,
-    DetailPanel
+    Toolbar, TreePanel, Inbox, DetailPanel
   }
 }
 </script>

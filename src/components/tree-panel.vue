@@ -12,8 +12,7 @@ import VueTree    from "./vue-tree.vue"
 
 export default {
   components: {
-    UserSelect,
-    VueTree
+    UserSelect, VueTree
   },
   data() {
     return {
