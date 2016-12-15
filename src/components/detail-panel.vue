@@ -22,6 +22,7 @@
 
 <script>
 import http from "axios"
+import types from "../infobit-types"
 import TextField   from "./data-fields/text-field.vue"
 import NumberField from "./data-fields/number-field.vue"
 import HtmlField   from "./data-fields/html-field.vue"
@@ -34,58 +35,7 @@ export default {
     return {
       infobit: undefined,
       mode: "info",   // "info" or "form"
-      types: {
-        "infobits.type.infobit": {
-          titleLabel: "Infobit Title",
-          details: [
-            {
-              prop: "text",
-              label: "Notes",
-              dataType: "HTML"
-            }
-          ]
-        },
-        "infobits.type.person": {
-          titleLabel: "Person Name",
-          details: [
-            {
-              prop: "birthDate",
-              label: "Year of birth",
-              dataType: "Number"
-            },
-            {
-              prop: "birthPlace",
-              label: "Place of birth",
-              dataType: "Text"
-            },
-            {
-              prop: "text",
-              label: "Notes",
-              dataType: "HTML"
-            }
-          ]
-        },
-        "infobits.type.question": {
-          titleLabel: "Question",
-          details: [
-            {
-              prop: "text",
-              label: "Notes",
-              dataType: "HTML"
-            }
-          ]
-        },
-        "infobits.type.structural_element": {
-          titleLabel: "Structural Element",
-          details: [
-            {
-              prop: "text",
-              label: "Notes",
-              dataType: "HTML"
-            }
-          ]
-        }
-      }
+      types
     }
   },
   methods: {
@@ -119,5 +69,18 @@ export default {
 #detail-panel .field > .label {
   font-size: 75%;
   color: grey;
+}
+
+#detail-panel p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#detail-panel p + p {
+  margin-top: 1em;
+}
+
+#detail-panel button {
+  margin-top: 2em;
 }
 </style>
