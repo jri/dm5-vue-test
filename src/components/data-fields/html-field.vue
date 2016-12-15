@@ -1,7 +1,7 @@
 <template>
-  <div v-if="mode == 'info'" v-html="model[prop]">
+  <div v-if="mode=='info'" v-html="model[prop]">
   </div>
-  <div v-else-if="mode == 'form'">
+  <div v-else-if="mode=='form'">
     <textarea v-model="model[prop]"></textarea>
   </div>
 </template>

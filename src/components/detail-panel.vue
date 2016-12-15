@@ -1,14 +1,23 @@
 <template>
   <div id="detail-panel" v-if="infobit">
     <h3>{{infobit.title}}</h3>
+    <!-- Title -->
+    <div class="field" v-if="mode=='form'">
+      <div class="label">{{types[infobit.type].titleLabel}}</div>
+      <text-field :mode="mode" :model="infobit" prop="title">
+      </text-field>
+    </div>
+    <!-- Details -->
     <div class="field" v-for="detail in types[infobit.type].details">
       <div class="label">{{detail.label}}</div>
       <component :is="compName(detail)"
         :mode="mode" :model="infobit.details" :prop="detail.prop">
       </component>
+    </div>
+    <!-- Button -->
+    <button      v-if="mode=='info'" @click="mode='form'">Edit</button>
+    <button v-else-if="mode=='form'" @click="mode='info'; submit()">Submit</button>
   </div>
-  <button v-if="mode=='info'"      @click="mode='form'">Edit</button>
-  <button v-else-if="mode=='form'" @click="mode='info'; submit()">Submit</button>
 </template>
 
 <script>

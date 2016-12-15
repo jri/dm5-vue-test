@@ -32,6 +32,11 @@ body {
   margin: 0;
 }
 
+input, textarea {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+}
+
 #infobits-app {
   height: 100%;
   display: flex;
