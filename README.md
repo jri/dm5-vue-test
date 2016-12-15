@@ -1,6 +1,4 @@
-# infobits
-
-> A Vue.js project
+# A vue.js project
 
 ## Build Setup
 

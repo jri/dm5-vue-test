@@ -4,9 +4,11 @@
     <div class="field" v-for="detail in types[infobit.type].details">
       <div class="label">{{detail.label}}</div>
       <component :is="compName(detail)"
-        :mode="mode" :value="infobit.details[detail.prop]">
+        :mode="mode" :model="infobit.details" :prop="detail.prop">
       </component>
   </div>
+  <button v-if="mode=='info'"      @click="mode='form'">Edit</button>
+  <button v-else-if="mode=='form'" @click="mode='info'; submit()">Submit</button>
 </template>
 
 <script>
@@ -78,7 +80,12 @@ export default {
     }
   },
   methods: {
-    compName: detail => detail.dataType.toLowerCase() + '-field'
+    compName: function(detail) {
+      return detail.dataType.toLowerCase() + '-field'
+    },
+    submit: function() {
+      http.put("/infobits/infobit/" + this.infobit.id, this.infobit)
+    }
   },
   watch: {
     "$root.$data.infobitId": function(id) {

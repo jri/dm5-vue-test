@@ -16,6 +16,3 @@ export default {
   props: ["node"]
 }
 </script>
-
-<style>
-</style>
