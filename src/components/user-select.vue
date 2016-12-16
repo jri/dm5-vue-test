@@ -1,5 +1,5 @@
 <template>
-  <select>
+  <select v-model="selected">
     <option v-for="user in users">{{user.value}}</option>
   </select>
 </template>
@@ -10,7 +10,13 @@ import http from "axios"
 export default {
   data() {
     return {
-      users: []
+      users: [],
+      selected: undefined
+    }
+  },
+  watch: {
+    selected: function(username) {
+      this.$root.$emit("select-user", username)
     }
   },
   created() {

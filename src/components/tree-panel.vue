@@ -17,82 +17,32 @@ export default {
   },
   data() {
     return {
-      tree: {
-        "id": 2973,
-        "nodes": [
-          {
-            "id": 4528,
-            "infobit": {
-              "id": 4511,
-              "title": "Africa",
-              "type": "infobits.type.infobit",
-              "creator": "admin",
-              "created": 1481507383895
-            },
-            "nodes": [
-              {
-                "id": 4584,
-                "infobit": {
-                  "id": 4463,
-                  "title": "Mali",
-                  "type": "infobits.type.infobit",
-                  "creator": "admin",
-                  "created": 1481480336901
-                },
-                "nodes": [],
-                "collapsed": false
-              },
-              {
-                "id": 4598,
-                "infobit": {
-                  "id": 4494,
-                  "title": "Asia",
-                  "type": "infobits.type.infobit",
-                  "creator": "admin",
-                  "created": 1481507380918
-                },
-                "nodes": [
-                  {
-                    "id": 4626,
-                    "infobit": {
-                      "id": 142,
-                      "title": "Syrien",
-                      "type": "infobits.type.infobit",
-                      "creator": "admin",
-                      "created": 1481480330241
-                    },
-                    "nodes": [],
-                    "collapsed": false
-                  },
-                  {
-                    "id": 4612,
-                    "infobit": {
-                      "id": 4432,
-                      "title": "Jemen",
-                      "type": "infobits.type.infobit",
-                      "creator": "admin",
-                      "created": 1481480334625
-                    },
-                    "nodes": [],
-                    "collapsed": false
-                  }
-                ],
-                "collapsed": false
-              }
-            ],
-            "collapsed": false
-          }
-        ],
-        "collapsed": false
-      }
+      tree: undefined
     }
   },
-  created: function() {
-    console.log("### tree-panel: register set-collapsed handler")
-    this.$root.$on("set-collapsed", function(node) {
-      console.log("### set-collapsed received for " + node.id + " (" + node.collapsed + ")")
+  created() {
+    this.$root.$on("select-user",   this.selectUser)
+    this.$root.$on("set-collapsed", this.setCollapsed)
+  },
+  beforeDestroy() {
+    // Note: when Webpack redeploys this component ("Hot Module Replacement") the created()
+    // hook is triggered again, resulting in the event listeners registered multiple times.
+    // Explicit unregistering is required.
+    this.$root.$off("select-user",   this.selectUser)
+    this.$root.$off("set-collapsed", this.setCollapsed)
+  },
+  methods: {
+    selectUser(username) {
+      // Note: if the http callback would be defined with function() inside that function "this" would be
+      // undefined. Usually vue.js binds "this" to the component when calling an event handler or watcher.
+      // But the http callback is *not* called by vue.js but by axios. We work around this by using the
+      // arrow notation for defining the http callback. This way "this" remains to be bound to the component.
+      http.get("/infobits/tree/infobits.tree." + username)
+        .then(response => this.tree = response.data)
+    },
+    setCollapsed(node) {
       http.put("/infobits/tree/node/" + node.id + "/collapsed/" + node.collapsed)
-    })
+    }
   }
 }
 </script>

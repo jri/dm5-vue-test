@@ -32,7 +32,6 @@ export default {
     },
     setCollapsed: function() {
       this.node.collapsed = !this.isCollapsed
-      console.log("### tree-node: EMIT set-collapsed for " + this.node.id + " (" + this.node.collapsed + ")");
       this.$root.$emit("set-collapsed", this.node)
     }
   }
@@ -44,22 +43,22 @@ li.vue-tree-node {
   list-style-type: none;
 }
 
-.vue-tree-node > .arrow {
+li.vue-tree-node > .arrow {
   display: inline-block;
   width: 11px;
   height: 11px;
   margin-right: 0.2em;
 }
 
-.vue-tree-node > .arrow.collapsed {
+li.vue-tree-node > .arrow.collapsed {
   background-image: url(assets/collapsed.png);
 }
 
-.vue-tree-node > .arrow.expanded {
+li.vue-tree-node > .arrow.expanded {
   background-image: url(assets/expanded.png);
 }
 
-.vue-tree-node .debug {
+li.vue-tree-node .debug {
   font-size: 75%;
   color: grey;
 }

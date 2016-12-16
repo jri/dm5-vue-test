@@ -1,5 +1,5 @@
 <template>
-  <ul class="vue-tree">
+  <ul v-if="tree" class="vue-tree">
     <vue-tree-node :node="tree"></vue-tree-node>
   </ul>
 </template>
