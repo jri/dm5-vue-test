@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="vue-tree">
     <vue-tree-node :node="tree"></vue-tree-node>
   </ul>
 </template>
@@ -14,3 +14,9 @@ export default {
   }
 }
 </script>
+
+<style>
+ul.vue-tree {
+  padding-left: 0;
+}
+</style>
