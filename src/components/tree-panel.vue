@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import http from "axios"
 import UserSelect from "./user-select.vue"
 import VueTree    from "./vue-tree.vue"
 
@@ -85,6 +86,13 @@ export default {
         "collapsed": false
       }
     }
+  },
+  created: function() {
+    console.log("### tree-panel: register set-collapsed handler")
+    this.$root.$on("set-collapsed", function(node) {
+      console.log("### set-collapsed received for " + node.id + " (" + node.collapsed + ")")
+      http.put("/infobits/tree/node/" + node.id + "/collapsed/" + node.collapsed)
+    })
   }
 }
 </script>

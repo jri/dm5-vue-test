@@ -32,6 +32,8 @@ export default {
     },
     setCollapsed: function() {
       this.node.collapsed = !this.isCollapsed
+      console.log("### tree-node: EMIT set-collapsed for " + this.node.id + " (" + this.node.collapsed + ")");
+      this.$root.$emit("set-collapsed", this.node)
     }
   }
 }
