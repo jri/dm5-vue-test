@@ -1,28 +1,27 @@
 <template>
   <div id="detail-panel" v-if="infobit">
     <h3>{{infobit.title}}</h3>
-    <!-- Title -->
-    <div class="field" v-if="mode=='form'">
-      <div class="label">{{types[infobit.type].titleLabel}}</div>
+    <!-- Title Field (form mode only) -->
+    <div class="field" v-if="formMode">
+      <div class="label">{{titleLabel}}</div>
       <text-field :mode="mode" :model="infobit" prop="title">
       </text-field>
     </div>
     <!-- Details -->
-    <div class="field" v-for="detail in types[infobit.type].details">
+    <div class="field" v-for="detail in details">
       <div class="label">{{detail.label}}</div>
       <component :is="compName(detail)"
         :mode="mode" :model="infobit.details" :prop="detail.prop">
       </component>
     </div>
     <!-- Button -->
-    <button      v-if="mode=='info'" @click="mode='form'">Edit</button>
-    <button v-else-if="mode=='form'" @click="mode='info'; submit()">Submit</button>
+    <button      v-if="infoMode" @click="setMode('form')">Edit</button>
+    <button v-else-if="formMode" @click="setMode('info'); submit()">Submit</button>
   </div>
 </template>
 
 <script>
 import http from "axios"
-import types from "../infobit-types"
 import TextField   from "./data-fields/text-field.vue"
 import NumberField from "./data-fields/number-field.vue"
 import HtmlField   from "./data-fields/html-field.vue"
@@ -31,25 +30,41 @@ export default {
   components: {
     TextField, NumberField, HtmlField
   },
-  data() {
-    return {
-      infobit: undefined,
-      mode: "info",   // "info" or "form"
-      types
+  computed: {
+    infobit() {
+      return this.$store.state.infobit
+    },
+    details() {
+      return this.type.details
+    },
+    titleLabel() {
+      return this.type.titleLabel
+    },
+    mode() {
+      return this.$store.state.detailPanel.mode
+    },
+    infoMode() {
+      return this.mode == "info"
+    },
+    formMode() {
+      return this.mode == "form"
+    },
+    types() {
+      return this.$store.state.types
+    },
+    type() {
+      return this.types[this.infobit.type]
     }
   },
   methods: {
-    compName: function(detail) {
+    compName(detail) {
       return detail.dataType.toLowerCase() + '-field'
     },
-    submit: function() {
+    setMode(mode) {
+      this.$store.commit("setDetailPanelMode", mode)
+    },
+    submit() {
       http.put("/infobits/infobit/" + this.infobit.id, this.infobit)
-    }
-  },
-  watch: {
-    "$store.state.infobitId": function(id) {
-      http.get("/infobits/infobit/" + id)
-        .then(response => this.infobit = response.data)
     }
   }
 }
@@ -60,6 +75,7 @@ export default {
   flex-basis: 30%;
   overflow: auto;
   background-color: white;
+  word-wrap: break-word;  /* avoid horizontal scrollbar in case of long words */
 }
 
 #detail-panel .field {
