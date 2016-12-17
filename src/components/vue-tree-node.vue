@@ -1,10 +1,12 @@
 <template>
   <li class="vue-tree-node">
-    <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="setCollapsed"></div>
-    <span v-if="node.infobit" :class="{highlight: isSelected}" @click="setSelected">
-      {{node.infobit.title}}
-    </span>
-    <span class="debug">{{node.id}}</span>
+    <div class="content">
+      <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed"></div>
+      <div :class="['title', {highlight: isSelected}]" v-if="node.infobit" @click="setSelected">
+        {{node.infobit.title}}
+      </div>
+      <div class="debug">{{node.id}}</div>
+    </div>
     <ul v-if="hasChilds && !isCollapsed">
       <vue-tree-node v-for="node in node.nodes" :node="node"></vue-tree-node>
     </ul>
@@ -30,9 +32,9 @@ export default {
     setSelected: function() {
       this.$root.$data.infobitId = this.node.infobit.id
     },
-    setCollapsed: function() {
+    toggleCollapsed: function() {
       this.node.collapsed = !this.isCollapsed
-      this.$root.$emit("set-collapsed", this.node)
+      this.$root.$emit("set-collapsed", this.node.id, this.isCollapsed)
     }
   }
 }
@@ -41,21 +43,31 @@ export default {
 <style>
 li.vue-tree-node {
   list-style-type: none;
+  margin-top: 0.6em;
 }
 
-li.vue-tree-node > .arrow {
-  display: inline-block;
-  width: 11px;
-  height: 11px;
-  margin-right: 0.2em;
+li.vue-tree-node .content {
+  display: flex;
 }
 
-li.vue-tree-node > .arrow.collapsed {
+li.vue-tree-node .content .arrow {
+  flex: 0 0 11px;
+  margin-right: 0.6em;
+  background-repeat: no-repeat;
+  background-position: 0px 5px;
+}
+
+li.vue-tree-node .content .arrow.collapsed {
   background-image: url(assets/collapsed.png);
 }
 
-li.vue-tree-node > .arrow.expanded {
+li.vue-tree-node .content .arrow.expanded {
   background-image: url(assets/expanded.png);
+}
+
+li.vue-tree-node .content .title {
+  word-wrap: break-word;  /* avoid horizontal scrollbar in case of long words */
+  min-width: 0;           /* needed for word-wrap in a flex layout */
 }
 
 li.vue-tree-node .debug {

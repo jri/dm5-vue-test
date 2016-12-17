@@ -30,6 +30,7 @@ html {
 body {
   height: 100%;
   margin: 0;
+  overflow: hidden;   /* avoid window bounce when scrolling */
 }
 
 input, textarea {

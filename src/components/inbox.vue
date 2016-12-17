@@ -31,5 +31,6 @@ export default {
   flex-basis: 30%;
   overflow: auto;
   background-color: white;
+  word-wrap: break-word;  /* avoid horizontal scrollbar in case of long words */
 }
 </style>
