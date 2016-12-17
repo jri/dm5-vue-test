@@ -47,7 +47,7 @@ export default {
     }
   },
   watch: {
-    "$root.$data.infobitId": function(id) {
+    "$store.state.infobitId": function(id) {
       http.get("/infobits/infobit/" + id)
         .then(response => this.infobit = response.data)
     }

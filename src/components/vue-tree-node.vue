@@ -22,7 +22,7 @@ export default {
       return this.node.nodes.length
     },
     isSelected: function() {
-      return this.$root.$data.infobitId == this.node.infobit.id;
+      return this.$store.state.infobitId == this.node.infobit.id
     },
     isCollapsed: function() {
       return this.node.collapsed
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     setSelected: function() {
-      this.$root.$data.infobitId = this.node.infobit.id
+      this.$store.commit("setSelected", this.node.infobit.id)
     },
     toggleCollapsed: function() {
       this.node.collapsed = !this.isCollapsed
@@ -67,7 +67,7 @@ li.vue-tree-node .content .arrow.expanded {
 
 li.vue-tree-node .content .title {
   word-wrap: break-word;  /* avoid horizontal scrollbar in case of long words */
-  min-width: 0;           /* needed for word-wrap in a flex layout */
+  min-width: 0;           /* make word-wrap effective in a flex layout */
 }
 
 li.vue-tree-node .debug {

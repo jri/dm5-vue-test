@@ -2,8 +2,7 @@
   <div id="inbox">
     <h3>Inbox</h3>
     <ul>
-      <li v-for="infobit in infobits" @click="$root.$data.infobitId = infobit.id"
-                                      :class="{highlight: $root.$data.infobitId == infobit.id}">
+      <li v-for="infobit in infobits" :class="{highlight: isSelected(infobit.id)}" @click="setSelected(infobit.id)">
         {{infobit.title}}
       </li>
     </ul>
@@ -22,6 +21,14 @@ export default {
   created() {
     http.get("/infobits/inbox")
       .then(response => this.infobits = response.data.infobits)
+  },
+  methods: {
+    isSelected: function(infobitId) {
+      return this.$store.state.infobitId == infobitId
+    },
+    setSelected: function(infobitId) {
+      this.$store.commit("setSelected", infobitId)
+    }
   }
 }
 </script>

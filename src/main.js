@@ -1,11 +1,9 @@
 import Vue from "vue"
 import InfobitsApp from "./components/infobits-app.vue"
+import InfobitsStore from "./store"
 
 new Vue({
   el: "#app",
-  // global app state
-  data: {
-    infobitId: undefined
-  },
-  render: r => r(InfobitsApp)
+  render: r => r(InfobitsApp),
+  store: InfobitsStore
 })
