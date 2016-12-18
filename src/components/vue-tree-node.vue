@@ -1,8 +1,9 @@
 <template>
   <li class="vue-tree-node">
     <div class="content">
-      <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed"></div>
-      <div :class="['title', {highlight: isSelected}]" v-if="node.infobit" @click="setSelected">
+      <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed">
+      </div>
+      <div :class="['title', {highlight: isSelected}]" v-if="node.infobit" @click="select">
         {{node.infobit.title}}
       </div>
       <div class="debug">{{node.id}}</div>
@@ -18,21 +19,24 @@ export default {
   name: "vue-tree-node",
   props: ["node"],
   computed: {
-    hasChilds: function() {
+    isSelected() {
+      return this.$store.state.infobitId == this.infobitId
+    },
+    isCollapsed() {
+      return this.node.collapsed
+    },
+    hasChilds() {
       return this.node.nodes.length
     },
-    isSelected: function() {
-      return this.$store.state.infobitId == this.node.infobit.id
-    },
-    isCollapsed: function() {
-      return this.node.collapsed
+    infobitId() {
+      return this.node.infobit.id
     }
   },
   methods: {
-    setSelected: function() {
-      this.$store.commit("setSelected", this.node.infobit.id)
+    select() {
+      this.$store.commit("selectInfobit", this.infobitId)
     },
-    toggleCollapsed: function() {
+    toggleCollapsed() {
       this.node.collapsed = !this.isCollapsed
       this.$root.$emit("set-collapsed", this.node.id, this.isCollapsed)
     }

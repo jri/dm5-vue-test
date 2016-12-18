@@ -15,8 +15,8 @@
       </component>
     </div>
     <!-- Button -->
-    <button      v-if="infoMode" @click="setMode('form')">Edit</button>
-    <button v-else-if="formMode" @click="setMode('info'); submit()">Submit</button>
+    <button      v-if="infoMode" @click="edit">Edit</button>
+    <button v-else-if="formMode" @click="submit">Submit</button>
   </div>
 </template>
 
@@ -60,11 +60,11 @@ export default {
     compName(detail) {
       return detail.dataType.toLowerCase() + '-field'
     },
-    setMode(mode) {
-      this.$store.commit("setDetailPanelMode", mode)
+    edit() {
+      this.$store.commit("editInfobit")
     },
     submit() {
-      http.put("/infobits/infobit/" + this.infobit.id, this.infobit)
+      this.$store.commit("submitInfobit")
     }
   }
 }

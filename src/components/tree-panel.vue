@@ -8,12 +8,11 @@
 
 <script>
 import http from "axios"
-import UserSelect from "./user-select.vue"
-import VueTree    from "./vue-tree.vue"
 
 export default {
   components: {
-    UserSelect, VueTree
+    "user-select": require("./user-select.vue"),
+    "vue-tree":    require("./vue-tree.vue")
   },
   data() {
     return {
@@ -42,12 +41,12 @@ export default {
       // undefined. Usually vue.js binds "this" to the component when calling an event handler or watcher.
       // But the http callback is *not* called by vue.js but by axios. We work around this by using the
       // arrow notation for defining the http callback. This way "this" remains to be bound to the component.
-      console.log("### selectUser", username)
+      console.log("selectUser", username)
       http.get("/infobits/tree/infobits.tree." + username)
         .then(response => this.tree = response.data)
     },
     setCollapsed(nodeId, collapsed) {
-      console.log("### setCollapsed", nodeId, collapsed)
+      console.log("setCollapsed", nodeId, collapsed)
       http.put("/infobits/tree/node/" + nodeId + "/collapsed/" + collapsed)
     }
   }

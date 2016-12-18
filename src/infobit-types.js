@@ -1,5 +1,6 @@
 export default {
   "infobits.type.infobit": {
+    name: "Infobit",
     titleLabel: "Infobit Title",
     details: [
       {
@@ -10,6 +11,7 @@ export default {
     ]
   },
   "infobits.type.person": {
+    name: "Person",
     titleLabel: "Person Name",
     details: [
       {
@@ -30,6 +32,7 @@ export default {
     ]
   },
   "infobits.type.question": {
+    name: "Question",
     titleLabel: "Question",
     details: [
       {
@@ -40,6 +43,7 @@ export default {
     ]
   },
   "infobits.type.structural_element": {
+    name: "Structural Element",
     titleLabel: "Structural Element",
     details: [
       {

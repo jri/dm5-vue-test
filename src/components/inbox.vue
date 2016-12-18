@@ -2,7 +2,7 @@
   <div id="inbox">
     <h3>Inbox</h3>
     <ul>
-      <li v-for="infobit in infobits" :class="{highlight: isSelected(infobit.id)}" @click="setSelected(infobit.id)">
+      <li v-for="infobit in infobits" :class="{highlight: isSelected(infobit.id)}" @click="select(infobit.id)">
         {{infobit.title}}
       </li>
     </ul>
@@ -26,8 +26,8 @@ export default {
     isSelected: function(infobitId) {
       return this.$store.state.infobitId == infobitId
     },
-    setSelected: function(infobitId) {
-      this.$store.commit("setSelected", infobitId)
+    select: function(infobitId) {
+      this.$store.commit("selectInfobit", infobitId)
     }
   }
 }

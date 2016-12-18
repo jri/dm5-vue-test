@@ -1,7 +1,7 @@
 <template>
   <div id="infobits-app">
     <toolbar></toolbar>
-    <div id="infobits-content">
+    <div id="content">
       <tree-panel></tree-panel>
       <inbox></inbox>
       <detail-panel></detail-panel>
@@ -10,14 +10,12 @@
 </template>
 
 <script>
-import Toolbar     from "./toolbar.vue"
-import TreePanel   from "./tree-panel.vue"
-import Inbox       from "./inbox.vue"
-import DetailPanel from "./detail-panel.vue"
-
 export default {
   components: {
-    Toolbar, TreePanel, Inbox, DetailPanel
+    "toolbar":      require("./toolbar.vue"),
+    "tree-panel":   require("./tree-panel.vue"),
+    "inbox":        require("./inbox.vue"),
+    "detail-panel": require("./detail-panel.vue")
   }
 }
 </script>
@@ -45,7 +43,7 @@ input, textarea {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 
-#infobits-content {
+#infobits-app #content {
   display: flex;
   flex: auto;
   min-height: 0;
