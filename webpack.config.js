@@ -39,7 +39,7 @@ module.exports = {
   devServer: {
     proxy: [
       {
-        context: ["/core", "/accesscontrol", "/infobits"],
+        context: ["/core", "/accesscontrol", "/websockets", "/infobits"],
         target: "http://localhost:8080"
       }
     ],

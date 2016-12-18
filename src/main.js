@@ -1,9 +1,13 @@
 import Vue from "vue"
+import store from "./infobits-store"
+import WebSocket from "./lib/websocket"
+import InfobitsProcessor from "./infobits-processor"
 import InfobitsApp from "./components/infobits-app.vue"
-import InfobitsStore from "./store"
+
+new WebSocket("eu.nosconte.infobits", new InfobitsProcessor(store))
 
 new Vue({
   el: "#app",
   render: r => r(InfobitsApp),
-  store: InfobitsStore
+  store
 })
