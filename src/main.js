@@ -10,7 +10,7 @@ new Vue({
   el: "#app",
   render: r => r(InfobitsApp),
   created() {
-    store.commit("init")
+    store.dispatch("init")
   },
   store
 })

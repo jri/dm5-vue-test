@@ -58,10 +58,10 @@ export default {
       return detailDef.dataType.toLowerCase() + '-field'
     },
     edit() {
-      this.$store.commit("editInfobit")
+      this.$store.dispatch("editInfobit")
     },
     submit() {
-      this.$store.commit("submitInfobit")
+      this.$store.dispatch("submitInfobit")
     }
   }
 }

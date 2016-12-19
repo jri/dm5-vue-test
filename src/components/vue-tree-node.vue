@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     select() {
-      this.$store.commit("selectInfobit", this.infobitId)
+      this.$store.dispatch("selectInfobit", this.infobitId)
     },
     toggleCollapsed() {
       this.node.collapsed = !this.isCollapsed

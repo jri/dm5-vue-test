@@ -21,7 +21,7 @@ export default {
       return this.$store.state.infobitId == infobitId
     },
     select: function(infobitId) {
-      this.$store.commit("selectInfobit", infobitId)
+      this.$store.dispatch("selectInfobit", infobitId)
     }
   }
 }

@@ -18,19 +18,17 @@ export default new Vuex.Store({
     },
     typeDefs
   },
-  mutations: {
-    init(state) {
-      // ### FIXME: vuex doesn't allow async mutations. Use an action instead.
+  actions: {
+    init({state}) {
       http.get("/infobits/inbox")
         .then(response => state.inbox.infobits = response.data.infobits)
     },
-    selectInfobit(state, infobitId) {
+    selectInfobit({state}, infobitId) {
       state.infobitId = infobitId
-      // ### FIXME: vuex doesn't allow async mutations. Use an action instead.
       http.get("/infobits/infobit/" + infobitId)
         .then(response => state.detailPanel.infobit = response.data)
     },
-    newInfobit(state, type) {
+    newInfobit({state}, type) {
       console.log("newInfobit", type)
       state.infobitId = undefined
       state.detailPanel.infobit = {
@@ -40,11 +38,11 @@ export default new Vuex.Store({
       state.detailPanel.mode = "form"
       state.detailPanel.formAction = "create"
     },
-    editInfobit(state) {
+    editInfobit({state}) {
       state.detailPanel.mode = "form"
       state.detailPanel.formAction = "update"
     },
-    submitInfobit(state) {
+    submitInfobit({state}) {
       console.log("submitInfobit", state.detailPanel.infobit)
       state.detailPanel.mode = "info"
       switch (state.detailPanel.formAction) {

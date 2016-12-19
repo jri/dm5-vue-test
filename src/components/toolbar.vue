@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     newInfobit(type) {
-      this.$store.commit("newInfobit", type)
+      this.$store.dispatch("newInfobit", type)
     }
   }
 }
