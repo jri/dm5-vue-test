@@ -8,10 +8,10 @@
       </text-field>
     </div>
     <!-- Details -->
-    <div class="field" v-for="detail in details">
-      <div class="label">{{detail.label}}</div>
-      <component :is="compName(detail)"
-        :mode="mode" :model="infobit.details" :prop="detail.prop">
+    <div class="field" v-for="detailDef in detailDefs">
+      <div class="label">{{detailDef.label}}</div>
+      <component :is="compName(detailDef)"
+        :mode="mode" :model="infobit.details" :prop="detailDef.prop">
       </component>
     </div>
     <!-- Button -->
@@ -21,24 +21,21 @@
 </template>
 
 <script>
-import http from "axios"
-import TextField   from "./data-fields/text-field.vue"
-import NumberField from "./data-fields/number-field.vue"
-import HtmlField   from "./data-fields/html-field.vue"
-
 export default {
   components: {
-    TextField, NumberField, HtmlField
+    "text-field":   require("./data-fields/text-field.vue"),
+    "number-field": require("./data-fields/number-field.vue"),
+    "html-field":   require("./data-fields/html-field.vue")
   },
   computed: {
     infobit() {
-      return this.$store.state.infobit
+      return this.$store.state.detailPanel.infobit
     },
-    details() {
-      return this.type.details
+    detailDefs() {
+      return this.typeDef.detailDefs
     },
     titleLabel() {
-      return this.type.titleLabel
+      return this.typeDef.titleLabel
     },
     mode() {
       return this.$store.state.detailPanel.mode
@@ -49,16 +46,16 @@ export default {
     formMode() {
       return this.mode == "form"
     },
-    types() {
-      return this.$store.state.types
+    typeDefs() {
+      return this.$store.state.typeDefs
     },
-    type() {
-      return this.types[this.infobit.type]
+    typeDef() {
+      return this.typeDefs[this.infobit.type]
     }
   },
   methods: {
-    compName(detail) {
-      return detail.dataType.toLowerCase() + '-field'
+    compName(detailDef) {
+      return detailDef.dataType.toLowerCase() + '-field'
     },
     edit() {
       this.$store.commit("editInfobit")
@@ -85,6 +82,12 @@ export default {
 #detail-panel .field > .label {
   font-size: 75%;
   color: grey;
+}
+
+#detail-panel input,
+#detail-panel textarea {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #detail-panel p {

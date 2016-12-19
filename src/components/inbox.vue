@@ -10,17 +10,11 @@
 </template>
 
 <script>
-import http from "axios"
-
 export default {
-  data() {
-    return {
-      infobits: []
+  computed: {
+    infobits() {
+      return this.$store.state.inbox.infobits
     }
-  },
-  created() {
-    http.get("/infobits/inbox")
-      .then(response => this.infobits = response.data.infobits)
   },
   methods: {
     isSelected: function(infobitId) {

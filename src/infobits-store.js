@@ -1,31 +1,39 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import http from "axios"
-import types from "./infobit-types"
+import typeDefs from "./infobit-typedefs"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    types,
-    infobitId: undefined,
-    infobit: undefined,
+    infobitId: undefined,     // selected infobit
+    inbox: {
+      infobits: undefined     // array
+    },
     detailPanel: {
+      infobit: undefined,
       mode: "info",           // "info" or "form"
       formAction: undefined   // "create" or "update"
-    }
+    },
+    typeDefs
   },
   mutations: {
+    init(state) {
+      // ### FIXME: vuex doesn't allow async mutations. Use an action instead.
+      http.get("/infobits/inbox")
+        .then(response => state.inbox.infobits = response.data.infobits)
+    },
     selectInfobit(state, infobitId) {
       state.infobitId = infobitId
       // ### FIXME: vuex doesn't allow async mutations. Use an action instead.
       http.get("/infobits/infobit/" + infobitId)
-        .then(response => state.infobit = response.data)
+        .then(response => state.detailPanel.infobit = response.data)
     },
     newInfobit(state, type) {
       console.log("newInfobit", type)
       state.infobitId = undefined
-      state.infobit = {
+      state.detailPanel.infobit = {
         type,
         details: {}
       }
@@ -37,13 +45,13 @@ export default new Vuex.Store({
       state.detailPanel.formAction = "update"
     },
     submitInfobit(state) {
-      console.log("submitInfobit", state.infobit)
+      console.log("submitInfobit", state.detailPanel.infobit)
       state.detailPanel.mode = "info"
       switch (state.detailPanel.formAction) {
       case "create":
-        http.post("/infobits/infobit", state.infobit); break
+        http.post("/infobits/infobit", state.detailPanel.infobit); break
       case "update":
-        http.put("/infobits/infobit/" + state.infobit.id, state.infobit); break
+        http.put("/infobits/infobit/" + state.detailPanel.infobit.id, state.detailPanel.infobit); break
       }
     }
   }

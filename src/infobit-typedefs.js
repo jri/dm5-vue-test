@@ -2,7 +2,7 @@ export default {
   "infobits.type.infobit": {
     name: "Infobit",
     titleLabel: "Infobit Title",
-    details: [
+    detailDefs: [
       {
         prop: "text",
         label: "Notes",
@@ -13,7 +13,7 @@ export default {
   "infobits.type.person": {
     name: "Person",
     titleLabel: "Person Name",
-    details: [
+    detailDefs: [
       {
         prop: "birthDate",
         label: "Year of birth",
@@ -34,7 +34,7 @@ export default {
   "infobits.type.question": {
     name: "Question",
     titleLabel: "Question",
-    details: [
+    detailDefs: [
       {
         prop: "text",
         label: "Notes",
@@ -45,7 +45,7 @@ export default {
   "infobits.type.structural_element": {
     name: "Structural Element",
     titleLabel: "Structural Element",
-    details: [
+    detailDefs: [
       {
         prop: "text",
         label: "Notes",

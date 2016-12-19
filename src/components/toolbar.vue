@@ -2,7 +2,7 @@
   <div id="toolbar">
     <h2>Infobits 2</h2>
     <div id="create-panel">
-      <a class="type-name" v-for="(typeDef, type) in types" @click="newInfobit(type)" href="#">
+      <a class="type-name" v-for="(typeDef, type) in typeDefs" @click="newInfobit(type)" href="#">
         {{typeDef.name}}
       </a>
     </div>
@@ -16,8 +16,8 @@ export default {
     "login-dialog": require("./login-dialog.vue")
   },
   computed: {
-    types() {
-      return this.$store.state.types
+    typeDefs() {
+      return this.$store.state.typeDefs
     }
   },
   methods: {
