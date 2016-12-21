@@ -1,27 +1,20 @@
 <template>
-  <select v-model="selected">
+  <!-- Note: for 2-way binding to work with store state the easiest way
+       is to go through the parent object (treePanel) in the binding -->
+  <select v-model="treePanel.selectedUser">
     <option v-for="user in users">{{user.value}}</option>
   </select>
 </template>
 
 <script>
-import http from "axios"
-
 export default {
-  data() {
-    return {
-      users: [],
-      selected: undefined
+  computed: {
+    treePanel: function() {
+      return this.$store.state.treePanel
+    },
+    users: function() {
+      return this.$store.state.treePanel.users
     }
-  },
-  watch: {
-    selected: function(username) {
-      this.$root.$emit("select-user", username)
-    }
-  },
-  created() {
-    http.get("/core/topic/by_type/dm4.accesscontrol.username")
-      .then(response => this.users = response.data)
   }
 }
 </script>

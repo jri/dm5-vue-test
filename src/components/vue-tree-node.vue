@@ -38,7 +38,10 @@ export default {
     },
     toggleCollapsed() {
       this.node.collapsed = !this.isCollapsed
-      this.$root.$emit("set-collapsed", this.node.id, this.isCollapsed)
+      this.$store.dispatch("setCollapsed", {
+        nodeId: this.node.id,
+        collapsed: this.isCollapsed
+      })
     }
   }
 }

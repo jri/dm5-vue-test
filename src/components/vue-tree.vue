@@ -1,16 +1,14 @@
 <template>
-  <ul v-if="tree" class="vue-tree">
+  <ul class="vue-tree" v-if="tree">
     <vue-tree-node :node="tree"></vue-tree-node>
   </ul>
 </template>
 
 <script>
-import VueTreeNode from "./vue-tree-node.vue"
-
 export default {
   props: ["tree"],
   components: {
-    VueTreeNode
+    "vue-tree-node": require("./vue-tree-node.vue")
   }
 }
 </script>
