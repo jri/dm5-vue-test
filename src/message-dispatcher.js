@@ -5,12 +5,13 @@ export default function(store) {
     //case "removeInfobitFromInbox":
     //case "addInfobitToInbox":
     case "updateInfobit":
+      store.dispatch("updateInfobit", message.infobit); break
     //case "insertInfobitInTree":
     //case "removeNodeFromTree":
     //case "moveSubtree":
     //case "copySubtree":
     default:
-      throw "Unexpected command: \"" + message.command + "\"";
+      throw "\"" + message.command + "\" is an unknown message";
     }
   }
 }

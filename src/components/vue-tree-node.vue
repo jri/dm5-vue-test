@@ -37,10 +37,9 @@ export default {
       this.$store.dispatch("selectInfobit", this.infobitId)
     },
     toggleCollapsed() {
-      this.node.collapsed = !this.isCollapsed
       this.$store.dispatch("setCollapsed", {
-        nodeId: this.node.id,
-        collapsed: this.isCollapsed
+        node: this.node,
+        collapsed: !this.isCollapsed
       })
     }
   }
@@ -73,7 +72,6 @@ li.vue-tree-node .content .arrow.expanded {
 }
 
 li.vue-tree-node .content .title {
-  word-wrap: break-word;  /* avoid horizontal scrollbar in case of long words */
   min-width: 0;           /* make word-wrap effective in a flex layout */
 }
 

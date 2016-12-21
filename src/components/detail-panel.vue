@@ -71,7 +71,6 @@ export default {
 #detail-panel {
   flex-basis: 30%;
   overflow: auto;
-  word-wrap: break-word;  /* avoid horizontal scrollbar in case of long words */
 }
 
 #detail-panel .field {

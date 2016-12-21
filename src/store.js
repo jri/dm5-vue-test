@@ -25,6 +25,7 @@ const store = new Vuex.Store({
   },
 
   actions: {
+
     init({state}) {
       http.get("/core/topic/by_type/dm4.accesscontrol.username")
         .then(response => state.treePanel.users = response.data)
@@ -38,20 +39,17 @@ const store = new Vuex.Store({
         .then(response => state.detailPanel.infobit = response.data)
     },
 
-    // Tree Panel
-
     selectTree({state}, username) {
       console.log("selectTree", username)
       http.get("/infobits/tree/infobits.tree." + username)
         .then(response => state.treePanel.tree = response.data)
     },
 
-    setCollapsed({state}, {nodeId, collapsed}) {
-      console.log("setCollapsed", nodeId, collapsed)
-      http.put("/infobits/tree/node/" + nodeId + "/collapsed/" + collapsed)
+    setCollapsed({state}, {node, collapsed}) {
+      console.log("setCollapsed", node.id, collapsed)
+      node.collapsed = collapsed
+      http.put("/infobits/tree/node/" + node.id + "/collapsed/" + collapsed)
     },
-
-    // Detail Panel
 
     newInfobit({state}, type) {
       console.log("newInfobit", type)
@@ -78,6 +76,15 @@ const store = new Vuex.Store({
       case "update":
         http.put("/infobits/infobit/" + state.detailPanel.infobit.id, state.detailPanel.infobit); break
       }
+    },
+
+    updateInfobit({state}, infobit) {
+      findInfobitInInbox(infobit.id, updateTitle)
+      findInfobitInTree(infobit.id, updateTitle)
+
+      function updateTitle(_infobit) {
+        _infobit.title = infobit.title
+      }
     }
   }
 })
@@ -89,5 +96,28 @@ store.watch(function(state) {
 })
 
 store.dispatch("init")
+
+// === Helper ===
+
+function findInfobitInInbox(id, callback) {
+  var infobit = store.state.inbox.infobits.find(i => i.id == id)
+  if (infobit) {
+    callback(infobit)
+  }
+}
+
+function findInfobitInTree(id, callback) {
+
+  findInfobitInNodes(store.state.treePanel.tree.nodes)
+
+  function findInfobitInNodes(nodes) {
+    nodes.forEach(node => {
+      if (node.infobit.id == id) {
+        callback(node.infobit)
+      }
+      findInfobitInNodes(node.nodes)
+    })
+  }
+}
 
 export default store

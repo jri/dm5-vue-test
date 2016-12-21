@@ -30,6 +30,7 @@ export default {
 
 <style>
 #toolbar {
+  flex: none;
   display: flex;
   align-items: baseline;
   background-color: #f8f8f8;

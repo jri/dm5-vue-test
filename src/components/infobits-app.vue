@@ -28,7 +28,8 @@ html {
 body {
   height: 100%;
   margin: 0;
-  overflow: hidden;   /* avoid window bounce when scrolling */
+  overflow: hidden;       /* avoid window bounce when scrolling reaches top/bottom */
+  word-wrap: break-word;  /* avoid horizontal scrollbar in case of very long words */
 }
 
 input, textarea {
@@ -44,8 +45,8 @@ input, textarea {
 }
 
 #infobits-app #content {
-  display: flex;
   flex: auto;
+  display: flex;
   min-height: 0;
 }
 
