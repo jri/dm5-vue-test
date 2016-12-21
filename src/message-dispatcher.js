@@ -3,7 +3,8 @@ export default function(store) {
   return function(message) {
     switch (message.command) {
     //case "removeInfobitFromInbox":
-    //case "addInfobitToInbox":
+    case "addInfobitToInbox":
+      store.dispatch("addInfobitToInbox", message.infobit); break
     case "updateInfobit":
       store.dispatch("updateInfobit", message.infobit); break
     //case "insertInfobitInTree":

@@ -14,7 +14,7 @@ const store = new Vuex.Store({
       tree: undefined
     },
     inbox: {
-      infobits: undefined     // array
+      infobits: []            // set to empty (instead undefined) for initial sort
     },
     detailPanel: {
       infobit: undefined,
@@ -22,6 +22,12 @@ const store = new Vuex.Store({
       formAction: undefined   // "create" or "update"
     },
     typeDefs
+  },
+
+  getters: {
+    sortedInboxInfobits: state => state.inbox.infobits.sort(
+      (i1, i2) => i2.created - i1.created
+    )
   },
 
   actions: {
@@ -76,6 +82,14 @@ const store = new Vuex.Store({
       case "update":
         http.put("/infobits/infobit/" + state.detailPanel.infobit.id, state.detailPanel.infobit); break
       }
+    },
+
+    // WebSocket messages
+
+    addInfobitToInbox({state}, infobit) {
+      state.inbox.infobits.push(infobit)
+      state.infobitId = infobit.id
+      state.detailPanel.infobit = infobit
     },
 
     updateInfobit({state}, infobit) {

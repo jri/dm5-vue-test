@@ -13,7 +13,7 @@
 export default {
   computed: {
     infobits() {
-      return this.$store.state.inbox.infobits
+      return this.$store.getters.sortedInboxInfobits
     }
   },
   methods: {
