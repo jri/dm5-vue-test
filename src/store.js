@@ -57,6 +57,10 @@ const store = new Vuex.Store({
       http.put("/infobits/tree/node/" + node.id + "/collapsed/" + collapsed)
     },
 
+    moveSubtree({state}, {rootNodeId, parentNodeId, predNodeId}) {
+      http.put("/infobits/tree/node/" + rootNodeId + "/parent/" + parentNodeId + "/pred/" + predNodeId)
+    },
+
     newInfobit({state}, type) {
       console.log("newInfobit", type)
       state.infobitId = undefined
