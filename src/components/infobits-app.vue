@@ -53,4 +53,9 @@ input, textarea {
 .highlight {
   background-color: yellow;
 }
+
+.debug {
+  font-size: 75%;
+  color: grey;
+}
 </style>

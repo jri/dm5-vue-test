@@ -12,7 +12,7 @@ export default function(store) {
     //case "moveSubtree":
     //case "copySubtree":
     default:
-      throw "\"" + message.command + "\" is an unknown message";
+      throw "Unknown message \"" + message.command + "\" received";
     }
   }
 }

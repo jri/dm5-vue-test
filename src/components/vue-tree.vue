@@ -13,28 +13,46 @@ Vue.use(VueDragula)
 export default {
   props: ["tree"],
   created() {
-    console.log("Registering Dragula event handlers")
-    Vue.vueDragula.eventBus.$on("drop", this.drop)
-    //Vue.vueDragula.eventBus.$on("dropModel", this.dropModel)
+    this.$dragula.options("tree-bag", {
+      accepts: (el, target, source, sibling) => {
+        // console.log("### accepts(el, target, source, sibling(succ))", el, target, source, sibling)
+        if (this.panel(target) == "inbox") {
+          // console.log("Drop on inbox NOT accepted!")
+          return false
+        } else {
+          // console.log("Drop on tree IS accepted!")
+          return true
+        }
+      }
+    })
+    this.$dragula.eventBus.$on("drop-model", this.dropModel)
   },
   beforeDestroy() {
-    console.log("Unregistering Dragula event handlers")
-    Vue.vueDragula.eventBus.$off("drop", this.drop)
-    //Vue.vueDragula.eventBus.$off("dropModel", this.dropModel)
+    this.$dragula.eventBus.$off("drop-model", this.dropModel)
   },
   methods: {
-    drop(args) {
-      console.log("### drop(bag, el, target, source, sibling(succ))", args)
-      var rootNodeId = args[1].__vue__.node.id
-      var parentNodeId = args[2].parentNode.__vue__.node.id
-      var previousSibling = args[1].previousSibling
-      var predNodeId = previousSibling != null ? previousSibling.__vue__.node.id : -1
-      console.log("rootNodeId", rootNodeId, "parentNodeId", parentNodeId, "predNodeId", predNodeId)
-      this.$store.dispatch("moveSubtree", {rootNodeId, parentNodeId, predNodeId})
-    }/*,
-    dropModel(args, a2, a3, a4) {
-      console.log("### dropModel(bag, el, target, source, sibling(succ))", args, a2, a3, a4)
-    }*/
+    dropModel(bagName, el, dropTarget, dropSource, dropIndex) {
+      // console.log("### dropModel(bagName, el, dropTarget, dropSource, dropIndex)", bagName, el, dropTarget, dropSource, dropIndex)
+      var parentNodeId = dropTarget.el.parentElement.__vue__.node.id
+      var predNodeId = dropIndex > 0 ? dropTarget.model[dropIndex - 1].id : -1
+      if (this.panel(dropSource.el) == "inbox") {
+        var infobitId = dropTarget.model[dropIndex].id
+        console.log("=> insertInfobitInTree (infobitId, parentNodeId, predNodeId)", infobitId, parentNodeId, predNodeId)
+      } else {
+        var rootNodeId = dropTarget.model[dropIndex].id
+        console.log("=> moveSubtree (rootNodeId, parentNodeId, predNodeId)", rootNodeId, parentNodeId, predNodeId)
+        // this.$store.dispatch("moveSubtree", {rootNodeId, parentNodeId, predNodeId})
+      }
+    },
+    panel(el) {
+      if (el.parentElement.classList.contains("vue-tree-node")) {
+        return "tree"
+      } else if (el.parentElement.id == "inbox") {
+        return "inbox"
+      } else {
+        throw "Unknown Dragula container: " + el
+      }
+    }
   },
   components: {
     "vue-tree-node": require("./vue-tree-node.vue")

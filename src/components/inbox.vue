@@ -1,9 +1,11 @@
 <template>
   <div id="inbox">
     <h3>Inbox</h3>
-    <ul>
-      <li v-for="infobit in infobits" :class="{highlight: isSelected(infobit.id)}" @click="select(infobit.id)">
+    <ul v-dragula="infobits" bag="tree-bag">
+      <li v-for="infobit in infobits" :key="infobit.id" :class="{highlight: isSelected(infobit.id)}"
+                                                        @click="select(infobit.id)">
         {{infobit.title}}
+        <span class="debug">{{infobit.id}}</span>
       </li>
     </ul>
   </div>
