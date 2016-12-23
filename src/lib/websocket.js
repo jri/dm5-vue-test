@@ -48,7 +48,7 @@ export default function(plugin_uri, message_processor) {
     }
 
     ws.onclose = function(e) {
-      console.log("Closing WebSocket connection to", e.target.url, "reason:", e.reason)
+      console.log("Closing WebSocket connection to", e.target.url, e.reason)
       console.log("Reopening ...")
       setTimeout(setup_websocket, 1000)
     }

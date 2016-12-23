@@ -2,17 +2,25 @@ export default function(store) {
 
   return function(message) {
     switch (message.command) {
-    //case "removeInfobitFromInbox":
     case "addInfobitToInbox":
-      store.dispatch("addInfobitToInbox", message.infobit); break
+      store.dispatch("_addInfobitToInbox", message.infobit)
+      break
+    // case "insertInfobitInTree":
     case "updateInfobit":
-      store.dispatch("updateInfobit", message.infobit); break
-    //case "insertInfobitInTree":
+      store.dispatch("_updateInfobit", message.infobit)
+      break
+    //case "removeInfobitFromInbox":
     //case "removeNodeFromTree":
-    //case "moveSubtree":
+    case "moveSubtree":
+      store.dispatch("_moveSubtree", {
+        nodeId:       message.rootNodeId,
+        parentNodeId: message.parentNodeId,
+        predNodeId:   message.predNodeId
+      })
+      break
     //case "copySubtree":
     default:
-      console.log("Unknown message \"" + message.command + "\" received")
+      throw "Unknown message \"" + message.command + "\" received"
     }
   }
 }

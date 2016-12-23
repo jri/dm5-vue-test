@@ -45,7 +45,6 @@ export default {
         console.log("moveSubtree(rootNodeId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
         this.$store.dispatch("moveSubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
       }
-      console.log(this.$store.state.treePanel.tree)
     },
     panel(el) {
       if (el.parentElement.classList.contains("vue-tree-node")) {
@@ -63,7 +62,7 @@ export default {
 }
 </script>
 
-<style src="../../styles/dragula.css"></style>
+<style src="./assets/dragula.css"></style>
 
 <style>
 ul.vue-tree {

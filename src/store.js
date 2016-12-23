@@ -94,18 +94,40 @@ const store = new Vuex.Store({
 
     // WebSocket messages
 
-    addInfobitToInbox({state}, infobit) {
+    _addInfobitToInbox({state}, infobit) {
       state.inbox.infobits.push(infobit)
       state.infobitId = infobit.id
       state.detailPanel.infobit = infobit
     },
 
-    updateInfobit({state}, infobit) {
+    _updateInfobit({state}, infobit) {
       findInfobitInInbox(infobit.id, updateTitle)
       findInfobitInTree(infobit.id, updateTitle)
 
       function updateTitle(_infobit) {
         _infobit.title = infobit.title
+      }
+    },
+
+    _moveSubtree({state}, {nodeId, parentNodeId, predNodeId}) {
+      // remove from source
+      var node
+      findNode(nodeId, (nodes, i) => node = nodes.splice(i, 1)[0])
+      if (!node) {
+        throw "moveSubtree(): node " + nodeId + " not found in tree"
+      }
+      // insert at target
+      if (predNodeId == -1) {
+        let _nodes  // nodes to insert to
+        if (parentNodeId == state.treePanel.tree.id) {
+          _nodes = state.treePanel.tree.nodes
+        } else {
+          findNode(parentNodeId, (nodes, i) => _nodes = nodes[i].nodes)
+        }
+        // insert at begin
+        _nodes.splice(0, 0, node)
+      } else {
+        findNode(predNodeId, (nodes, i) => nodes.splice(i + 1, 0, node))
       }
     }
   }
@@ -138,6 +160,21 @@ function findInfobitInTree(id, callback) {
         callback(node.infobit)
       }
       findInfobitInNodes(node.nodes)
+    })
+  }
+}
+
+function findNode(nodeId, callback) {
+
+  findNodeInNodes(store.state.treePanel.tree.nodes)
+
+  function findNodeInNodes(nodes) {
+    nodes.forEach((node, i) => {
+      if (node.id == nodeId) {
+        callback(nodes, i)
+      } else {
+        findNodeInNodes(node.nodes)
+      }
     })
   }
 }
