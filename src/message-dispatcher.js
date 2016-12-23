@@ -12,7 +12,7 @@ export default function(store) {
     //case "moveSubtree":
     //case "copySubtree":
     default:
-      throw "Unknown message \"" + message.command + "\" received";
+      console.log("Unknown message \"" + message.command + "\" received")
     }
   }
 }

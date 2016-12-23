@@ -32,17 +32,20 @@ export default {
   },
   methods: {
     dropModel(bagName, el, dropTarget, dropSource, dropIndex) {
-      // console.log("### dropModel(bagName, el, dropTarget, dropSource, dropIndex)", bagName, el, dropTarget, dropSource, dropIndex)
+      // console.log("### dropModel(bagName, el, dropTarget, dropSource, dropIndex)", bagName, el, dropTarget,
+      //     dropSource, dropIndex)
+      // Note: depending on source droppedId is either a node ID (source=tree) or an infobit ID (source=inbox).
+      var droppedId = dropTarget.model[dropIndex].id
       var parentNodeId = dropTarget.el.parentElement.__vue__.node.id
       var predNodeId = dropIndex > 0 ? dropTarget.model[dropIndex - 1].id : -1
       if (this.panel(dropSource.el) == "inbox") {
-        var infobitId = dropTarget.model[dropIndex].id
-        console.log("=> insertInfobitInTree (infobitId, parentNodeId, predNodeId)", infobitId, parentNodeId, predNodeId)
+        console.log("insertInfobitInTree(infobitId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
+        this.$store.dispatch("insertInfobitInTree", {infobitId: droppedId, parentNodeId, predNodeId})
       } else {
-        var rootNodeId = dropTarget.model[dropIndex].id
-        console.log("=> moveSubtree (rootNodeId, parentNodeId, predNodeId)", rootNodeId, parentNodeId, predNodeId)
-        // this.$store.dispatch("moveSubtree", {rootNodeId, parentNodeId, predNodeId})
+        console.log("moveSubtree(rootNodeId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
+        this.$store.dispatch("moveSubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
       }
+      console.log(this.$store.state.treePanel.tree)
     },
     panel(el) {
       if (el.parentElement.classList.contains("vue-tree-node")) {
