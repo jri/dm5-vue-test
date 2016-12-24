@@ -14,8 +14,15 @@ export default {
   props: ["tree"],
   created() {
     this.$dragula.options("infobits", {
-      accepts: (el, target, source, sibling) => this.panel(target) == "tree",
-      copy:    (el,         source)          => this.panel(source) == "inbox"
+      accepts: (el, target, source, sibling) => {
+        var onTree = this.panel(target) == "tree"
+        var onSelf = /* el != target && */ el.contains(target)
+        // console.log("### accepts(onSelf)", onSelf)
+        var accept = onTree && !onSelf
+        // this.$store.dispatch("setCursor", accept ? "auto" : "not-allowed")   // doesn't work
+        return accept
+      },
+      copy: (el, source) => this.panel(source) == "inbox"
     })
     this.$dragula.eventBus.$on("drop-model", this.dropModel)
   },

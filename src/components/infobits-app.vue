@@ -1,5 +1,5 @@
 <template>
-  <div id="infobits-app">
+  <div id="infobits-app" :style="{cursor: cursor}">
     <toolbar></toolbar>
     <div id="content">
       <tree-panel></tree-panel>
@@ -11,6 +11,11 @@
 
 <script>
 export default {
+  computed: {
+    cursor() {
+      return this.$store.state.cursor
+    }
+  },
   components: {
     "toolbar":      require("./toolbar.vue"),
     "tree-panel":   require("./tree-panel.vue"),

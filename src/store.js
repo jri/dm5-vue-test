@@ -21,7 +21,8 @@ const store = new Vuex.Store({
       mode: "info",           // "info" or "form"
       formAction: undefined   // "create" or "update"
     },
-    typeDefs
+    typeDefs,
+    cursor: "auto"
   },
 
   getters: {
@@ -90,6 +91,11 @@ const store = new Vuex.Store({
       case "update":
         http.put("/infobits/infobit/" + state.detailPanel.infobit.id, state.detailPanel.infobit); break
       }
+    },
+
+    setCursor({state}, cursor) {
+      // console.log("setCursor", cursor)
+      state.cursor = cursor
     },
 
     // WebSocket messages
