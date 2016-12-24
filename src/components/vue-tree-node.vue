@@ -8,8 +8,8 @@
       </div>
       <div class="debug">{{node.id}}</div>
     </div>
-    <ul v-if="hasChilds && !isCollapsed">
-      <vue-tree-node v-for="node in node.nodes" :node="node"></vue-tree-node>
+    <ul v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
+      <vue-tree-node v-for="node in node.nodes" :node="node" :key="node.id"></vue-tree-node>
     </ul>
   </li>
 </template>
@@ -73,10 +73,5 @@ li.vue-tree-node .content .arrow.expanded {
 
 li.vue-tree-node .content .title {
   min-width: 0;           /* make word-wrap effective in a flex layout */
-}
-
-li.vue-tree-node .debug {
-  font-size: 75%;
-  color: grey;
 }
 </style>

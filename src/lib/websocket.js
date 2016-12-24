@@ -25,7 +25,7 @@ export default function(plugin_uri, message_processor) {
 
   config.then(response => {
     url = response.data["dm4.websockets.url"]
-    console.log("CONFIG: the WebSocket server is reachable at", url)
+    console.log("[DM4] CONFIG: the WebSocket server is reachable at", url)
     setup_websocket()
   })
 
@@ -38,18 +38,18 @@ export default function(plugin_uri, message_processor) {
     ws = new WebSocket(url, plugin_uri)
 
     ws.onopen = function(e) {
-      console.log("Opening WebSocket connection to", e.target.url)
+      console.log("[DM4] Opening WebSocket connection to", e.target.url)
     }
 
     ws.onmessage = function(e) {
       var message = JSON.parse(e.data)
-      console.log("Message received", message)
+      console.log("[DM4] Message received", message)
       message_processor(message)
     }
 
     ws.onclose = function(e) {
-      console.log("Closing WebSocket connection to", e.target.url, "reason:", e.reason)
-      console.log("Reopening ...")
+      console.log("[DM4] Closing WebSocket connection to", e.target.url, e.reason)
+      console.log("[DM4] Reopening ...")
       setTimeout(setup_websocket, 1000)
     }
   }
