@@ -13,17 +13,9 @@ Vue.use(VueDragula)
 export default {
   props: ["tree"],
   created() {
-    this.$dragula.options("tree-bag", {
-      accepts: (el, target, source, sibling) => {
-        // console.log("### accepts(el, target, source, sibling(succ))", el, target, source, sibling)
-        if (this.panel(target) == "inbox") {
-          // console.log("Drop on inbox NOT accepted!")
-          return false
-        } else {
-          // console.log("Drop on tree IS accepted!")
-          return true
-        }
-      }
+    this.$dragula.options("infobits", {
+      accepts: (el, target, source, sibling) => this.panel(target) == "tree",
+      copy:    (el,         source)          => this.panel(source) == "inbox"
     })
     this.$dragula.eventBus.$on("drop-model", this.dropModel)
   },

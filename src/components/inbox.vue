@@ -1,7 +1,7 @@
 <template>
   <div id="inbox">
     <h3>Inbox</h3>
-    <ul v-dragula="infobits" bag="tree-bag">
+    <ul v-dragula="infobits" bag="infobits">
       <li v-for="infobit in infobits" :key="infobit.id" :class="{highlight: isSelected(infobit.id)}"
                                                         @click="select(infobit.id)">
         {{infobit.title}}

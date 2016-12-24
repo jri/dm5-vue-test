@@ -8,7 +8,7 @@
       </div>
       <div class="debug">{{node.id}}</div>
     </div>
-    <ul v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="tree-bag">
+    <ul v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
       <vue-tree-node v-for="node in node.nodes" :node="node" :key="node.id"></vue-tree-node>
     </ul>
   </li>

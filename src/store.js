@@ -100,6 +100,16 @@ const store = new Vuex.Store({
       state.detailPanel.infobit = infobit
     },
 
+    _insertInfobitInTree({state}, {infobit, nodeId, parentNodeId, predNodeId}) {
+      var node = {
+        id: nodeId,
+        infobit,
+        nodes: [],
+        collapsed: false
+      }
+      insertNode(node, parentNodeId, predNodeId)
+    },
+
     _updateInfobit({state}, infobit) {
       findInfobitInInbox(infobit.id, updateTitle)
       findInfobitInTree(infobit.id, updateTitle)
@@ -111,24 +121,13 @@ const store = new Vuex.Store({
 
     _moveSubtree({state}, {nodeId, parentNodeId, predNodeId}) {
       // remove from source
-      var node
-      findNode(nodeId, (nodes, i) => node = nodes.splice(i, 1)[0])
-      if (!node) {
-        throw "moveSubtree(): node " + nodeId + " not found in tree"
+      var found = findNode(nodeId)
+      if (!found) {
+        throw "Node " + nodeId + " not found in tree"
       }
+      var node = found.nodes.splice(found.i, 1)[0]
       // insert at target
-      if (predNodeId == -1) {
-        let _nodes  // nodes to insert to
-        if (parentNodeId == state.treePanel.tree.id) {
-          _nodes = state.treePanel.tree.nodes
-        } else {
-          findNode(parentNodeId, (nodes, i) => _nodes = nodes[i].nodes)
-        }
-        // insert at begin
-        _nodes.splice(0, 0, node)
-      } else {
-        findNode(predNodeId, (nodes, i) => nodes.splice(i + 1, 0, node))
-      }
+      insertNode(node, parentNodeId, predNodeId)
     }
   }
 })
@@ -141,7 +140,30 @@ store.watch(function(state) {
 
 store.dispatch("init")
 
+export default store
+
+
+
 // === Helper ===
+
+function insertNode(node, parentNodeId, predNodeId) {
+  let nodes   // nodes to insert to
+  let i       // insertion index
+  if (predNodeId == -1) {
+    if (parentNodeId == store.state.treePanel.tree.id) {
+      nodes = store.state.treePanel.tree.nodes
+    } else {
+      let found = findNode(parentNodeId)
+      nodes = found.nodes[found.i].nodes
+    }
+    i = 0   // insert at begin
+  } else {
+    let found = findNode(predNodeId)
+    nodes = found.nodes
+    i = found.i + 1
+  }
+  nodes.splice(i, 0, node)
+}
 
 function findInfobitInInbox(id, callback) {
   var infobit = store.state.inbox.infobits.find(i => i.id == id)
@@ -164,19 +186,20 @@ function findInfobitInTree(id, callback) {
   }
 }
 
-function findNode(nodeId, callback) {
+function findNode(nodeId) {
 
-  findNodeInNodes(store.state.treePanel.tree.nodes)
+  return findNodeInNodes(store.state.treePanel.tree.nodes)
 
   function findNodeInNodes(nodes) {
-    nodes.forEach((node, i) => {
+    for (var i = 0, node; node = nodes[i]; i++) {
       if (node.id == nodeId) {
-        callback(nodes, i)
+        return {nodes, i}
       } else {
-        findNodeInNodes(node.nodes)
+        var found = findNodeInNodes(node.nodes)
+        if (found) {
+          return found
+        }
       }
-    })
+    }
   }
 }
-
-export default store

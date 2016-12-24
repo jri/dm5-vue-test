@@ -5,12 +5,19 @@ export default function(store) {
     case "addInfobitToInbox":
       store.dispatch("_addInfobitToInbox", message.infobit)
       break
-    // case "insertInfobitInTree":
+    case "insertInfobitInTree":
+      store.dispatch("_insertInfobitInTree", {
+        infobit:      message.infobit,
+        nodeId:       message.nodeId,
+        parentNodeId: message.parentNodeId,
+        predNodeId:   message.predNodeId
+      })
+      break
     case "updateInfobit":
       store.dispatch("_updateInfobit", message.infobit)
       break
-    //case "removeInfobitFromInbox":
-    //case "removeNodeFromTree":
+    //case "removeInfobitFromInbox":    TODO
+    //case "removeNodeFromTree":        TODO
     case "moveSubtree":
       store.dispatch("_moveSubtree", {
         nodeId:       message.rootNodeId,
@@ -18,7 +25,7 @@ export default function(store) {
         predNodeId:   message.predNodeId
       })
       break
-    //case "copySubtree":
+    //case "copySubtree":               TODO
     default:
       throw "Unknown message \"" + message.command + "\" received"
     }
