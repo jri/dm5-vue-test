@@ -74,4 +74,8 @@ li.vue-tree-node .content .arrow.expanded {
 li.vue-tree-node .content .title {
   min-width: 0;           /* make word-wrap effective in a flex layout */
 }
+
+li.vue-tree-node.inbox-transit {
+  margin-left: 20.6px;    /* must match the arrow style: 11px width + 0.6em margin */
+}
 </style>

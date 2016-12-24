@@ -25,9 +25,11 @@ export default {
       copy: (el, source) => this.panel(source) == "inbox"
     })
     this.$dragula.eventBus.$on("drop-model", this.dropModel)
+    this.$dragula.eventBus.$on("shadow", this.shadow)
   },
   beforeDestroy() {
     this.$dragula.eventBus.$off("drop-model", this.dropModel)
+    this.$dragula.eventBus.$off("shadow", this.shadow)
   },
   methods: {
     dropModel(bagName, el, dropTarget, dropSource, dropIndex) {
@@ -43,6 +45,12 @@ export default {
       } else {
         console.log("moveSubtree(rootNodeId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
         this.$store.dispatch("moveSubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
+      }
+    },
+    shadow(bagName, el, container, source) {
+      // console.log("### shadow(bagName, el, container, source)", bagName, el, container, source)
+      if (this.panel(source) == "inbox") {
+        el.classList.add("vue-tree-node", "inbox-transit")
       }
     },
     panel(el) {
