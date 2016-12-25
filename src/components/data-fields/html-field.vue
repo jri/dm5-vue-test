@@ -29,3 +29,18 @@ export default {
   }
 }
 </script>
+
+<style>
+.ql-container {
+  font-family: "Avenir", Helvetica, Arial, sans-serif !important;
+  font-size: 1em !important;
+}
+
+.ql-toolbar.ql-snow {
+  font-family: "Avenir", Helvetica, Arial, sans-serif !important;
+}
+
+.ql-editor p + p {
+  margin-top: 1em;
+}
+</style>

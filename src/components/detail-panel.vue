@@ -4,7 +4,7 @@
     <!-- Title Field (form mode only) -->
     <div class="field" v-if="formMode">
       <div class="label">{{titleLabel}}</div>
-      <text-field :mode="mode" :model="infobit" prop="title">
+      <text-field class="text-field" :mode="mode" :model="infobit" prop="title">
       </text-field>
     </div>
     <!-- Details -->
