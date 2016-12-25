@@ -35,6 +35,7 @@ body {
   margin: 0;
   overflow: hidden;       /* avoid window bounce when scrolling reaches top/bottom */
   word-wrap: break-word;  /* avoid horizontal scrollbar in case of very long words */
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 
 input, textarea {
@@ -46,7 +47,6 @@ input, textarea {
   height: 100%;
   display: flex;
   flex-flow: column;
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 
 #infobits-app #content {

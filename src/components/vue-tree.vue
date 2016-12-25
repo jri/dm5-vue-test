@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style src="./assets/dragula.css"></style>
+<style src="dragula/dist/dragula.css"></style>
 
 <style>
 ul.vue-tree {
