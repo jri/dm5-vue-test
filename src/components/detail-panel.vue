@@ -1,5 +1,5 @@
 <template>
-  <div id="detail-panel" v-if="infobit">
+  <div id="detail-panel" :class="mode" v-if="infobit">
     <h3>{{infobit.title}}</h3>
     <!-- Title Field (form mode only) -->
     <div class="field" v-if="formMode">
@@ -10,13 +10,12 @@
     <!-- Details -->
     <div class="field" v-for="detailDef in detailDefs">
       <div class="label">{{detailDef.label}}</div>
-      <component :is="compName(detailDef)"
+      <component :is="compName(detailDef)" :class="compName(detailDef)"
         :mode="mode" :model="infobit.details" :prop="detailDef.prop">
       </component>
     </div>
     <!-- Button -->
-    <button      v-if="infoMode" @click="edit">Edit</button>
-    <button v-else-if="formMode" @click="submit">Submit</button>
+    <button class="submit" @click="buttonAction">{{buttonLabel}}</button>
   </div>
 </template>
 
@@ -51,17 +50,18 @@ export default {
     },
     typeDef() {
       return this.typeDefs[this.infobit.type]
+    },
+    buttonLabel() {
+      return this.infoMode ? "Edit" : "Submit"
     }
   },
   methods: {
     compName(detailDef) {
       return detailDef.dataType.toLowerCase() + '-field'
     },
-    edit() {
-      this.$store.dispatch("editInfobit")
-    },
-    submit() {
-      this.$store.dispatch("submitInfobit")
+    buttonAction() {
+      var action = this.infoMode ? "editInfobit" : "submitInfobit"
+      this.$store.dispatch(action)
     }
   }
 }
@@ -82,22 +82,22 @@ export default {
   color: grey;
 }
 
-#detail-panel input,
-#detail-panel textarea {
+#detail-panel .field > .text-field   input,
+#detail-panel .field > .number-field input {
   width: 100%;
   box-sizing: border-box;
 }
 
-#detail-panel p {
+#detail-panel.info p {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-#detail-panel p + p {
+#detail-panel.info p + p {
   margin-top: 1em;
 }
 
-#detail-panel button {
+#detail-panel button.submit {
   margin-top: 2em;
 }
 </style>
