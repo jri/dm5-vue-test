@@ -4,8 +4,7 @@
     <ul v-dragula="infobits" bag="infobits">
       <li v-for="infobit in infobits" :key="infobit.id" :class="{highlight: isSelected(infobit.id)}"
                                                         @click="select(infobit.id)">
-        {{infobit.title}}
-        <span class="debug">{{infobit.id}}</span>
+        <infobit :infobit="infobit"></infobit>
       </li>
     </ul>
   </div>
@@ -25,6 +24,9 @@ export default {
     select: function(infobitId) {
       this.$store.dispatch("selectInfobit", infobitId)
     }
+  },
+  components: {
+    infobit: require("./infobit.vue")
   }
 }
 </script>

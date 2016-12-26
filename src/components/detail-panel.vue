@@ -21,11 +21,6 @@
 
 <script>
 export default {
-  components: {
-    "text-field":   require("./data-fields/text-field.vue"),
-    "number-field": require("./data-fields/number-field.vue"),
-    "html-field":   require("./data-fields/html-field.vue")
-  },
   computed: {
     infobit() {
       return this.$store.state.detailPanel.infobit
@@ -63,6 +58,11 @@ export default {
       var action = this.infoMode ? "editInfobit" : "submitInfobit"
       this.$store.dispatch(action)
     }
+  },
+  components: {
+    "text-field":   require("./data-fields/text-field.vue"),
+    "number-field": require("./data-fields/number-field.vue"),
+    "html-field":   require("./data-fields/html-field.vue")
   }
 }
 </script>
