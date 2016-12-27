@@ -3,7 +3,7 @@
     <h3>Inbox</h3>
     <ul v-dragula="infobits" bag="infobits">
       <li v-for="infobit in infobits" :key="infobit.id">
-        <infobit :infobit="infobit" @remove="remove"></infobit>
+        <infobit :infobit="infobit" :removeId="infobit.id" @remove="remove"></infobit>
         <span class="debug">{{infobit.id}}</span>
       </li>
     </ul>

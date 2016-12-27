@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  props: ["infobit"],
+  props: ["infobit", "removeId"],
   data() {
     return {
       hovered: false
@@ -24,7 +24,7 @@ export default {
       this.$store.dispatch("selectInfobit", this.infobit.id)
     },
     remove() {
-      this.$emit("remove", this.infobit.id)
+      this.$emit("remove", this.removeId)
     }
   }
 }

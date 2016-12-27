@@ -66,6 +66,10 @@ const store = new Vuex.Store({
       http.delete("/infobits/inbox/infobit/" + infobitId)
     },
 
+    removeNodeFromTree({state}, nodeId) {
+      http.delete("/infobits/tree/node/" + nodeId)
+    },
+
     moveSubtree({state}, {rootNodeId, parentNodeId, predNodeId}) {
       http.put("/infobits/tree/node/" + rootNodeId + "/parent/" + parentNodeId + "/pred/" + predNodeId)
     },
@@ -122,6 +126,11 @@ const store = new Vuex.Store({
 
     _removeInfobitFromInbox({state}, infobitId) {
       findInfobitInInbox(infobitId, (_, i) => state.inbox.infobits.splice(i, 1))
+    },
+
+    _removeNodeFromTree({state}, nodeId) {
+      var found = findNode(nodeId)
+      found.nodes.splice(found.i, 1)
     },
 
     _updateInfobit({state}, infobit) {

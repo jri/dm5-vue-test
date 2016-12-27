@@ -4,7 +4,8 @@
     <div class="content">
       <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed">
       </div>
-      <infobit class="infobit" :infobit="node.infobit" v-if="node.infobit" @remove="remove"></infobit>
+      <infobit :infobit="node.infobit" :removeId="node.id" v-if="node.infobit" class="infobit" @remove="remove">
+      </infobit>
       <span class="debug">{{node.id}}</span>
     </div>
     <!-- Child nodes -->
@@ -24,14 +25,11 @@ export default {
     },
     hasChilds() {
       return this.node.nodes.length
-    },
-    infobitId() {
-      return this.node.infobit.id
     }
   },
   methods: {
-    remove(infobitId) {
-      console.log("### TODO: removeNodeFromTree, infobit", infobitId)
+    remove(nodeId) {
+      this.$store.dispatch("removeNodeFromTree", nodeId)
     },
     toggleCollapsed() {
       this.$store.dispatch("setCollapsed", {
