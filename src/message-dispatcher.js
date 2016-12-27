@@ -16,7 +16,9 @@ export default function(store) {
     case "updateInfobit":
       store.dispatch("_updateInfobit", message.infobit)
       break
-    //case "removeInfobitFromInbox":    TODO
+    case "removeInfobitFromInbox":
+      store.dispatch("_removeInfobitFromInbox", message.infobitId)
+      break
     //case "removeNodeFromTree":        TODO
     case "moveSubtree":
       store.dispatch("_moveSubtree", {

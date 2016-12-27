@@ -2,7 +2,7 @@
   <span :class="['infobit', {hovered}]" @mouseenter="hovered=true" @mouseleave="hovered=false">
     {{infobit.title}}
     <span class="debug">{{infobit.id}}</span>
-    <span class="remove-button">R</span>
+    <span class="remove-button" @click="remove">R</span>
   </span>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   data() {
     return {
       hovered: false
+    }
+  },
+  methods: {
+    remove() {
+      this.$emit("remove", this.infobit.id)
     }
   }
 }
