@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    user: undefined,          // the logged in user (string)
     infobitId: undefined,     // selected infobit
     treePanel: {
       users: undefined,
@@ -33,7 +34,10 @@ const store = new Vuex.Store({
 
   actions: {
 
-    init({state}) {
+    initStore({state}, user) {
+      console.log("Init store", user)
+      state.user = user
+      state.treePanel.selectedUser = user
       http.get("/core/topic/by_type/dm4.accesscontrol.username")
         .then(response => state.treePanel.users = response.data)
       http.get("/infobits/inbox")
@@ -160,8 +164,6 @@ store.watch(function(state) {
 }, function(username) {
   store.dispatch("selectTree", username)
 })
-
-store.dispatch("init")
 
 export default store
 

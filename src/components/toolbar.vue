@@ -2,9 +2,13 @@
   <div id="toolbar">
     <h2>Infobits 2</h2>
     <div id="create-panel">
-      <a class="type-name" v-for="(typeDef, type) in typeDefs" @click="newInfobit(type)" href="#">
+      <span class="type-name" v-for="(typeDef, type) in typeDefs" @click="newInfobit(type)">
         {{typeDef.name}}
-      </a>
+      </span>
+    </div>
+    <div id="login-state">
+      Logged in as {{user}}<br>
+      <a href="#">Logout</a>
     </div>
   </div>
 </template>
@@ -12,6 +16,9 @@
 <script>
 export default {
   computed: {
+    user() {
+      return this.$store.state.user
+    },
     typeDefs() {
       return this.$store.state.typeDefs
     }
@@ -28,7 +35,7 @@ export default {
 #toolbar {
   flex: none;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   background-color: #f8f8f8;
 }
 
@@ -43,5 +50,9 @@ export default {
 
 #toolbar #create-panel .type-name {
   margin-left: 1em;
+}
+
+#toolbar #login-state {
+  font-size: 75%;
 }
 </style>
