@@ -24,8 +24,15 @@ export default {
         username: this.username,
         password: this.password
       }})
-      .then(response => this.message = "Login OK")
-      .catch(error   => this.message = "Login failed")
+      .then(response => {
+        console.log("Login OK", this.username)
+        this.message = "Login OK"
+        this.$router.push("/infobits")
+      })
+      .catch(error => {
+        console.log("Login failed", error)
+        this.message = "Login failed"
+      })
     }
   }
 }

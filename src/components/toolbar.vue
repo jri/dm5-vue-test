@@ -6,15 +6,11 @@
         {{typeDef.name}}
       </a>
     </div>
-    <login-dialog id="login"></login-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  components: {
-    "login-dialog": require("./login-dialog.vue")
-  },
   computed: {
     typeDefs() {
       return this.$store.state.typeDefs
@@ -47,9 +43,5 @@ export default {
 
 #toolbar #create-panel .type-name {
   margin-left: 1em;
-}
-
-#toolbar #login {
-  margin-left: 3em;
 }
 </style>

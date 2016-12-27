@@ -13,6 +13,7 @@
     "vue": "^2.1.7",
     "vue-dragula": "^2.0.0-alpha.1",
     "vue-quill-editor": "^1.0.0",
+    "vue-router": "^2.1.1",
     "vuex": "^2.1.1"
   },
   "devDependencies": {
