@@ -1,7 +1,7 @@
 <template>
-  <span :class="['infobit', {hovered}]" @mouseenter="hovered=true" @mouseleave="hovered=false">
-    {{infobit.title}}
-    <span class="debug">{{infobit.id}}</span>
+  <span :class="['infobit', {hovered}]" @click="select"
+        @mouseenter="hovered=true" @mouseleave="hovered=false">
+    <span :class="{highlight: isSelected}">{{infobit.title}}</span>
     <span class="remove-button" @click="remove">R</span>
   </span>
 </template>
@@ -14,7 +14,15 @@ export default {
       hovered: false
     }
   },
+  computed: {
+    isSelected() {
+      return this.$store.state.infobitId == this.infobit.id
+    }
+  },
   methods: {
+    select() {
+      this.$store.dispatch("selectInfobit", this.infobit.id)
+    },
     remove() {
       this.$emit("remove", this.infobit.id)
     }

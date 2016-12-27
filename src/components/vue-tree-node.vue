@@ -1,13 +1,13 @@
 <template>
   <li class="vue-tree-node">
+    <!-- Node -->
     <div class="content">
       <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed">
       </div>
-      <div :class="['title', {highlight: isSelected}]" v-if="node.infobit" @click="select">
-        {{node.infobit.title}}
-      </div>
-      <div class="debug">{{node.id}}</div>
+      <infobit class="infobit" :infobit="node.infobit" v-if="node.infobit" @remove="remove"></infobit>
+      <span class="debug">{{node.id}}</span>
     </div>
+    <!-- Child nodes -->
     <ul v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
       <vue-tree-node v-for="node in node.nodes" :node="node" :key="node.id"></vue-tree-node>
     </ul>
@@ -19,9 +19,6 @@ export default {
   name: "vue-tree-node",
   props: ["node"],
   computed: {
-    isSelected() {
-      return this.$store.state.infobitId == this.infobitId
-    },
     isCollapsed() {
       return this.node.collapsed
     },
@@ -33,8 +30,8 @@ export default {
     }
   },
   methods: {
-    select() {
-      this.$store.dispatch("selectInfobit", this.infobitId)
+    remove(infobitId) {
+      console.log("### TODO: removeNodeFromTree, infobit", infobitId)
     },
     toggleCollapsed() {
       this.$store.dispatch("setCollapsed", {
@@ -42,6 +39,9 @@ export default {
         collapsed: !this.isCollapsed
       })
     }
+  },
+  components: {
+    infobit: require("./infobit.vue")
   }
 }
 </script>
@@ -71,7 +71,7 @@ li.vue-tree-node .content .arrow.expanded {
   background-image: url(assets/expanded.png);
 }
 
-li.vue-tree-node .content .title {
+li.vue-tree-node .content .infobit {
   min-width: 0;           /* make word-wrap effective in a flex layout */
 }
 
