@@ -8,12 +8,14 @@
     </div>
     <div id="login-state">
       Logged in as {{user}}<br>
-      <a href="#">Logout</a>
+      <a @click.prevent="logout" href="#">Logout</a>
     </div>
   </div>
 </template>
 
 <script>
+import http from "axios"
+
 export default {
   computed: {
     user() {
@@ -26,6 +28,10 @@ export default {
   methods: {
     newInfobit(type) {
       this.$store.dispatch("newInfobit", type)
+    },
+    logout() {
+      http.post("/accesscontrol/logout")
+      this.$router.push("/login")
     }
   }
 }
