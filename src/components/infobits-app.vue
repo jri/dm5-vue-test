@@ -45,6 +45,10 @@ input, textarea {
   font-size: 1em;
 }
 
+#app {
+  height: 100%;
+}
+
 #infobits-app {
   height: 100%;
   display: flex;
