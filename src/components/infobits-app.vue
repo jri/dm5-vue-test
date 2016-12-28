@@ -25,6 +25,8 @@ export default {
 }
 </script>
 
+<style src="font-awesome/css/font-awesome.css"></style>
+
 <style>
 html {
   height: 100%;

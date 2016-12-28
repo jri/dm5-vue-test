@@ -46,8 +46,16 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
+        exclude: /-webfont/,
         options: {
-          name: '[name].[ext]?[hash]'
+          name: 'images/[name].[ext]?[hash]'
+        }
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]?[hash]'
         }
       }
     ]
@@ -69,7 +77,7 @@ module.exports = {
   },
   devtool: '#eval-source-map',
   performance: {
-    hints: process.env.NODE_ENV === 'production'
+    hints: false
   }
 }
 

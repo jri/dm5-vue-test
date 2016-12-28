@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "font-awesome": "^4.7.0",
     "vue": "^2.1.7",
     "vue-dragula": "^2.0.0-alpha.1",
     "vue-quill-editor": "^1.0.0",

@@ -1,6 +1,6 @@
 <template>
   <div id="toolbar">
-    <h2>Infobits 2</h2>
+    <h2><span class="fa fa-info-circle"></span> Infobits 2</h2>
     <div id="create-panel">
       <span class="type-name" v-for="(typeDef, type) in typeDefs" @click="newInfobit(type)">
         {{typeDef.name}}
