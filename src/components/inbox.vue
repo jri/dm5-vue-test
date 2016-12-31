@@ -5,7 +5,7 @@
       <li v-for="infobit in infobits" :key="infobit.id">
         <div class="content">
           <infobit :infobit="infobit" :removeId="infobit.id" class="infobit" @remove="remove"></infobit>
-          <span class="debug">{{infobit.id}}</span>
+          <!--span class="debug">{{infobit.id}}</span-->
         </div>
       </li>
     </ul>
@@ -34,6 +34,8 @@ export default {
 #inbox {
   flex-basis: 30%;
   overflow: auto;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 #inbox ul {

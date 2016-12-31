@@ -1,5 +1,5 @@
 <template>
-  <span :class="['infobit', {highlight: isSelected, hovered}, 'fa', iconClass]" @click="select"
+  <span :class="['infobit', 'clickable', {highlight: isSelected, hovered}, 'fa', iconClass]" @click="select"
         @mouseenter="hovered=true" @mouseleave="hovered=false">
     <span class="title">{{infobit.title}}</span>
     <span class="remove-button" @click="remove">R</span>

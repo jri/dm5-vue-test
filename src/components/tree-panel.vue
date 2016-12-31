@@ -8,14 +8,14 @@
 
 <script>
 export default {
-  components: {
-    "user-select": require("./user-select.vue"),
-    "vue-tree":    require("./vue-tree.vue")
-  },
   computed: {
     tree: function() {
       return this.$store.state.treePanel.tree
     }
+  },
+  components: {
+    "user-select": require("./user-select.vue"),
+    "vue-tree":    require("./vue-tree.vue")
   }
 }
 </script>
@@ -24,5 +24,7 @@ export default {
 #tree-panel {
   flex-basis: 40%;
   overflow: auto;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 </style>

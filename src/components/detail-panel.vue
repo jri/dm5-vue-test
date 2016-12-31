@@ -15,7 +15,7 @@
       </component>
     </div>
     <!-- Button -->
-    <button class="submit" @click="buttonAction">{{buttonLabel}}</button>
+    <button class="submit clickable" @click="buttonAction">{{buttonLabel}}</button>
   </div>
 </template>
 
@@ -71,6 +71,8 @@ export default {
 #detail-panel {
   flex-basis: 30%;
   overflow: auto;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 #detail-panel .field {

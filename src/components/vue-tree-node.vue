@@ -6,7 +6,7 @@
       </div>
       <infobit :infobit="node.infobit" :removeId="node.id" v-if="node.infobit" class="infobit" @remove="remove">
       </infobit>
-      <span class="debug">{{node.id}}</span>
+      <!--span class="debug">{{node.id}}</span-->
     </div>
     <!-- Child nodes -->
     <ul v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
@@ -59,6 +59,11 @@ li.vue-tree-node .content .arrow {
   margin-right: 0.6em;
   background-repeat: no-repeat;
   background-position: 0px 5px;
+  opacity: 0.5;
+}
+
+li.vue-tree-node .content .arrow:hover {
+  opacity: 1;
 }
 
 li.vue-tree-node .content .arrow.collapsed {

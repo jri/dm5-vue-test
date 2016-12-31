@@ -2,14 +2,14 @@
   <div id="toolbar">
     <h2>Infobits 2</h2>
     <div id="create-panel">
-      <span :class="['type-name', 'fa', iconClass(type)]" v-for="(typeDef, type) in typeDefs"
+      <span :class="['type-box', 'clickable', 'fa', iconClass(type)]" v-for="(typeDef, type) in typeDefs"
             @click="newInfobit(type)">
-        {{typeDef.name}}
+        <span class="type-name">{{typeDef.name}}</span>
       </span>
     </div>
     <div id="login-state">
       Logged in as {{user}}<br>
-      <a @click.prevent="logout" href="#">Logout</a>
+      <span id="logout-link" class="clickable" @click="logout">Logout</span>
     </div>
   </div>
 </template>
@@ -58,11 +58,19 @@ export default {
   margin-left: 3em;
 }
 
-#toolbar #create-panel .type-name {
+#toolbar #create-panel .type-box {
   margin-left: 1em;
+}
+
+#toolbar #create-panel .type-box .type-name {
+  margin-left: 0.4em;   /* should match ".infobit .title" format in infobit.vue */
 }
 
 #toolbar #login-state {
   font-size: 75%;
+}
+
+#toolbar #login-state #logout-link {
+  text-decoration: underline;
 }
 </style>

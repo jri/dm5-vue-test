@@ -61,6 +61,11 @@ input, textarea {
   min-height: 0;
 }
 
+.clickable:hover {
+  color: #0cf;    /* should match Quill styles in html-field.vue */
+  cursor: pointer;
+}
+
 .highlight {
   background-color: yellow;
 }
