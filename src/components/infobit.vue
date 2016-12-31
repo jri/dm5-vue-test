@@ -1,7 +1,7 @@
 <template>
-  <span :class="['infobit', {hovered}]" @click="select"
+  <span :class="['infobit', {highlight: isSelected, hovered}, 'fa', iconClass]" @click="select"
         @mouseenter="hovered=true" @mouseleave="hovered=false">
-    <span :class="{highlight: isSelected}">{{infobit.title}}</span>
+    <span class="title">{{infobit.title}}</span>
     <span class="remove-button" @click="remove">R</span>
   </span>
 </template>
@@ -17,6 +17,9 @@ export default {
   computed: {
     isSelected() {
       return this.$store.state.infobitId == this.infobit.id
+    },
+    iconClass() {
+      return "fa-" + this.$store.state.typeDefs[this.infobit.type].icon
     }
   },
   methods: {
@@ -33,6 +36,10 @@ export default {
 <style>
 .infobit {
   position: relative;
+}
+
+.infobit .title {
+  margin-left: 0.4em;
 }
 
 .infobit .remove-button {

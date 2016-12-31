@@ -1,6 +1,7 @@
 export default {
   "infobits.type.infobit": {
     name: "Infobit",
+    icon: "info-circle",
     titleLabel: "Infobit Title",
     detailDefs: [
       {
@@ -12,6 +13,7 @@ export default {
   },
   "infobits.type.person": {
     name: "Person",
+    icon: "user",
     titleLabel: "Person Name",
     detailDefs: [
       {
@@ -33,6 +35,7 @@ export default {
   },
   "infobits.type.question": {
     name: "Question",
+    icon: "question-circle",
     titleLabel: "Question",
     detailDefs: [
       {
@@ -44,6 +47,7 @@ export default {
   },
   "infobits.type.structural_element": {
     name: "Structural Element",
+    icon: "map-signs",
     titleLabel: "Structural Element",
     detailDefs: [
       {

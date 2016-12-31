@@ -47,7 +47,7 @@ export default {
 <style>
 li.vue-tree-node {
   list-style-type: none;
-  margin-top: 0.6em;
+  margin-top: 1em;
 }
 
 li.vue-tree-node .content {

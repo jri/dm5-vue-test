@@ -1,8 +1,9 @@
 <template>
   <div id="toolbar">
-    <h2><span class="fa fa-info-circle"></span> Infobits 2</h2>
+    <h2>Infobits 2</h2>
     <div id="create-panel">
-      <span class="type-name" v-for="(typeDef, type) in typeDefs" @click="newInfobit(type)">
+      <span :class="['type-name', 'fa', iconClass(type)]" v-for="(typeDef, type) in typeDefs"
+            @click="newInfobit(type)">
         {{typeDef.name}}
       </span>
     </div>
@@ -26,6 +27,9 @@ export default {
     }
   },
   methods: {
+    iconClass(type) {
+      return "fa-" + this.typeDefs[type].icon
+    },
     newInfobit(type) {
       this.$store.dispatch("newInfobit", type)
     },
