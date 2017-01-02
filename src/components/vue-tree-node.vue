@@ -2,14 +2,12 @@
   <li class="vue-tree-node">
     <!-- Node -->
     <div class="content">
-      <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed">
-      </div>
-      <infobit :infobit="node.infobit" :removeId="node.id" v-if="node.infobit" class="infobit" @remove="remove">
-      </infobit>
-      <!--span class="debug">{{node.id}}</span-->
+      <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed"></div>
+      <infobit :infobit="node.infobit" :removeId="node.id" class="infobit" @remove="remove"></infobit>
+      <span class="debug">{{node.id}}</span>
     </div>
     <!-- Child nodes -->
-    <ul v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
+    <ul class="child-nodes" v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
       <vue-tree-node v-for="node in node.nodes" :node="node" :key="node.id"></vue-tree-node>
     </ul>
   </li>

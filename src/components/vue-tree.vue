@@ -1,6 +1,10 @@
 <template>
-  <ul class="vue-tree" v-if="tree">
-    <vue-tree-node :node="tree"></vue-tree-node>
+  <!-- Note: child nodes rendering involves code doubling with vue-tree-node.vue here -->
+  <!-- We can't introduce a <child-nodes> component as Webpack can't handle indirect recursive ES6 default imports -->
+  <!-- The result would be "[Vue warn]: Failed to mount component: template or render function not defined" -->
+  <!-- https://github.com/webpack/webpack/issues/1788 -->
+  <ul class="vue-tree child-nodes" v-dragula="tree.nodes" bag="infobits">
+    <vue-tree-node v-for="node in tree.nodes" :node="node" :key="node.id"></vue-tree-node>
   </ul>
 </template>
 
@@ -33,11 +37,13 @@ export default {
   },
   methods: {
     dropModel(bagName, el, dropTarget, dropSource, dropIndex) {
-      // console.log("### dropModel(bagName, el, dropTarget, dropSource, dropIndex)", bagName, el, dropTarget,
-      //     dropSource, dropIndex)
       // Note: depending on source droppedId is either a node ID (source=tree) or an infobit ID (source=inbox).
       var droppedId = dropTarget.model[dropIndex].id
-      var parentNodeId = dropTarget.el.parentElement.__vue__.node.id
+      if (dropTarget.el.classList.contains("vue-tree")) {
+        var parentNodeId = this.tree.id
+      } else {
+        var parentNodeId = dropTarget.el.parentElement.__vue__.node.id
+      }
       var predNodeId = dropIndex > 0 ? dropTarget.model[dropIndex - 1].id : -1
       if (this.panel(dropSource.el) == "inbox") {
         console.log("insertInfobitInTree(infobitId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
@@ -48,13 +54,12 @@ export default {
       }
     },
     shadow(bagName, el, container, source) {
-      // console.log("### shadow(bagName, el, container, source)", bagName, el, container, source)
       if (this.panel(source) == "inbox") {
         el.classList.add("vue-tree-node", "inbox-transit")
       }
     },
     panel(el) {
-      if (el.parentElement.classList.contains("vue-tree-node")) {
+      if (el.classList.contains("child-nodes")) {
         return "tree"
       } else if (el.parentElement.id == "inbox") {
         return "inbox"

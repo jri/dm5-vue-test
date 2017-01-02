@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     treePanel: {
       users: undefined,
       selectedUser: undefined,
-      tree: undefined
+      tree: {nodes: []}
     },
     inbox: {
       infobits: []            // set to empty (instead undefined) for initial sort
