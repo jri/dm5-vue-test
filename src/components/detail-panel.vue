@@ -81,7 +81,7 @@ export default {
 
 #detail-panel .field > .label {
   font-size: 75%;
-  color: grey;
+  color: gray;
 }
 
 #detail-panel .field > .text-field   input,

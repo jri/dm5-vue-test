@@ -1,11 +1,7 @@
 <template>
   <div id="infobits-app" :style="{cursor: cursor}">
     <toolbar></toolbar>
-    <div id="content">
-      <tree-panel></tree-panel>
-      <inbox></inbox>
-      <detail-panel></detail-panel>
-    </div>
+    <infobits-content></infobits-content>
   </div>
 </template>
 
@@ -17,10 +13,8 @@ export default {
     }
   },
   components: {
-    "toolbar":      require("./toolbar.vue"),
-    "tree-panel":   require("./tree-panel.vue"),
-    "inbox":        require("./inbox.vue"),
-    "detail-panel": require("./detail-panel.vue")
+    "toolbar":          require("./toolbar.vue"),
+    "infobits-content": require("./infobits-content.vue"),
   }
 }
 </script>
@@ -55,12 +49,6 @@ input, textarea {
   flex-flow: column;
 }
 
-#infobits-app #content {
-  flex: auto;
-  display: flex;
-  min-height: 0;
-}
-
 .clickable:hover {
   color: #0cf;    /* should match Quill styles in html-field.vue */
   cursor: pointer;
@@ -72,6 +60,6 @@ input, textarea {
 
 .debug {
   font-size: 75%;
-  color: grey;
+  color: gray;
 }
 </style>
