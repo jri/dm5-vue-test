@@ -53,10 +53,10 @@ export default {
         this.$store.dispatch("moveSubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
       }
     },
+    // Note: the shadow event is fired only for the tree panel as the inbox doesn't accept drops.
+    // We don't need to check the source element here.
     shadow(bagName, el, container, source) {
-      if (this.panel(source) == "inbox") {
-        el.classList.add("vue-tree-node", "inbox-transit")
-      }
+      el.classList.add("vue-tree-node", "inbox-transit")
     },
     panel(el) {
       if (el.classList.contains("child-nodes")) {

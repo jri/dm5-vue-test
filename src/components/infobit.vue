@@ -1,19 +1,13 @@
 <template>
-  <span :class="['infobit', 'clickable', {highlight: isSelected, hovered}, 'fa', iconClass]" @click="select"
-        @mouseenter="hovered=true" @mouseleave="hovered=false">
+  <span :class="['infobit', 'clickable', {highlight: isSelected}, 'fa', iconClass]" @click="select">
     <span class="title">{{infobit.title}}</span>
-    <span class="remove-button" @click="remove">R</span>
+    <span class="remove-button fa fa-remove" @click="remove"></span>
   </span>
 </template>
 
 <script>
 export default {
   props: ["infobit", "removeId"],
-  data() {
-    return {
-      hovered: false
-    }
-  },
   computed: {
     isSelected() {
       return this.$store.state.infobitId == this.infobit.id
@@ -40,6 +34,7 @@ export default {
 
 .infobit .title {
   margin-left: 0.4em;
+  line-height: 1.3em;
 }
 
 .infobit .remove-button {
@@ -47,9 +42,14 @@ export default {
   bottom: 0;
   right: 0;
   visibility: hidden;
+  background-color: white;
 }
 
-.infobit.hovered .remove-button {
+.infobit:hover .remove-button {
   visibility: visible;
+}
+
+.infobit .remove-button:hover {
+  background-color: lightgray;
 }
 </style>
