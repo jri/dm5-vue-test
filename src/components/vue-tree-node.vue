@@ -2,7 +2,8 @@
   <li class="vue-tree-node">
     <!-- Node -->
     <div class="content">
-      <div :class="['arrow', hasChilds ? isCollapsed ? 'collapsed' : 'expanded' : '']" @click="toggleCollapsed"></div>
+      <div v-if="hasChilds" :class="['arrow', isCollapsed ? 'collapsed' : 'expanded']" @click="toggleCollapsed"></div>
+      <div v-else class="drop-area" v-dragula="[]" bag="infobits"></div>
       <infobit :infobit="node.infobit" :removeId="node.id" class="infobit" @remove="remove"></infobit>
       <span class="debug">{{node.id}}</span>
     </div>
@@ -52,12 +53,18 @@ li.vue-tree-node .content {
   display: flex;
 }
 
+li.vue-tree-node .content .drop-area {
+  flex: 0 0 9px;
+  margin-right: 0.6em;
+  border: 1px dotted lightgray;
+}
+
 li.vue-tree-node .content .arrow {
   flex: 0 0 11px;
   margin-right: 0.6em;
   background-repeat: no-repeat;
   background-position: 0px 5px;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 li.vue-tree-node .content .arrow:hover {

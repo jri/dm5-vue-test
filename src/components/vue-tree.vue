@@ -3,7 +3,7 @@
   <!-- We can't introduce a <child-nodes> component as Webpack can't handle indirect recursive ES6 default imports -->
   <!-- The result would be "[Vue warn]: Failed to mount component: template or render function not defined" -->
   <!-- https://github.com/webpack/webpack/issues/1788 -->
-  <ul class="vue-tree child-nodes" v-dragula="tree.nodes" bag="infobits">
+  <ul class="vue-tree" v-dragula="tree.nodes" bag="infobits">
     <vue-tree-node v-for="node in tree.nodes" :node="node" :key="node.id"></vue-tree-node>
   </ul>
 </template>
