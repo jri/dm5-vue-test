@@ -46,7 +46,7 @@ export default {
 <style>
 li.vue-tree-node {
   list-style-type: none;
-  margin-top: 1em;
+  margin-top: 0.8em;      /* should match "ul > li" format in inbox.vue */
 }
 
 li.vue-tree-node .content {

@@ -1,5 +1,6 @@
 <template>
-  <span :class="['infobit', 'clickable', {highlight: isSelected}, 'fa', iconClass]" @click="select">
+  <span :class="['infobit', 'clickable', {highlight: isSelected}]" @click="select">
+    <span :class="['fa', iconClass]"></span>
     <span class="title">{{infobit.title}}</span>
     <span class="remove-button fa fa-remove" @click="remove"></span>
   </span>
@@ -33,7 +34,7 @@ export default {
 }
 
 .infobit .title {
-  margin-left: 0.4em;
+  margin-left: 0.2em;   /* should match ".type-name" format in toolbar.vue */
   line-height: 1.3em;
 }
 

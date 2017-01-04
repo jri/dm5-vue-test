@@ -2,8 +2,8 @@
   <div id="toolbar">
     <h2>Infobits 2</h2>
     <div id="create-panel">
-      <span :class="['type-box', 'clickable', 'fa', iconClass(type)]" v-for="(typeDef, type) in typeDefs"
-            @click="newInfobit(type)">
+      <span class="type-box clickable" v-for="(typeDef, type) in typeDefs" @click="newInfobit(type)">
+        <span :class="['fa', iconClass(type)]"></span>
         <span class="type-name">{{typeDef.name}}</span>
       </span>
     </div>
@@ -59,11 +59,11 @@ export default {
 }
 
 #toolbar #create-panel .type-box {
-  margin-left: 1em;
+  margin-left: 1.4em;
 }
 
 #toolbar #create-panel .type-box .type-name {
-  margin-left: 0.4em;   /* should match ".infobit .title" format in infobit.vue */
+  margin-left: 0.2em;   /* should match ".title" format in infobit.vue */
 }
 
 #toolbar #login-state {
