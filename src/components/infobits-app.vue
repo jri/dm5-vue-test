@@ -49,13 +49,21 @@ input, textarea {
   flex-flow: column;
 }
 
+.highlight {
+  background-color: yellow;
+}
+
 .clickable:hover {
   color: #0cf;    /* should match Quill styles in html-field.vue (3x) */
   cursor: pointer;
 }
 
-.highlight {
-  background-color: yellow;
+.fa {
+  color: #aaa;
+}
+
+.clickable:hover > .fa {
+  color: #0cf;    /* should match Quill styles in html-field.vue (3x) */
 }
 
 .debug {

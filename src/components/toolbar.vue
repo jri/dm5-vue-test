@@ -63,7 +63,7 @@ export default {
 }
 
 #toolbar #create-panel .type-box .type-name {
-  margin-left: 0.2em;   /* should match ".title" format in infobit.vue */
+  margin-left: 0.2em;   /* should match ".title" style in infobit.vue */
 }
 
 #toolbar #login-state {

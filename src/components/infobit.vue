@@ -34,7 +34,7 @@ export default {
 }
 
 .infobit .title {
-  margin-left: 0.2em;   /* should match ".type-name" format in toolbar.vue */
+  margin-left: 0.2em;   /* should match ".type-name" style in toolbar.vue */
   line-height: 1.3em;
 }
 

@@ -45,7 +45,7 @@ export default {
 
 #inbox ul > li {
   list-style-type: none;
-  margin-top: 0.8em;      /* should match "li.vue-tree-node" format in vue-tree-node.vue */
+  margin-top: 0.8em;      /* should match "li.vue-tree-node" style in vue-tree-node.vue */
 }
 
 /* Note: the flex content wrapper is needed in conjunction with the infobit icon (pseudo element). */
