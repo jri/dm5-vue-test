@@ -24,6 +24,7 @@ export default {
 #tree-panel {
   flex-basis: 40%;
   overflow: auto;
+  box-sizing: border-box;
   padding-left: 1em;
   padding-right: 1em;
 }

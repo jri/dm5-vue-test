@@ -50,7 +50,7 @@ input, textarea {
 }
 
 .clickable:hover {
-  color: #0cf;    /* should match Quill styles in html-field.vue */
+  color: #0cf;    /* should match Quill styles in html-field.vue (3x) */
   cursor: pointer;
 }
 

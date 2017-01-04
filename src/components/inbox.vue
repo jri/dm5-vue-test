@@ -34,6 +34,7 @@ export default {
 #inbox {
   flex-basis: 30%;
   overflow: auto;
+  box-sizing: border-box;
   padding-left: 1em;
   padding-right: 1em;
 }
