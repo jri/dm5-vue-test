@@ -1,5 +1,5 @@
 <template>
-  <div id="infobits-app" :style="{cursor: cursor}">
+  <div id="infobits-app">
     <toolbar></toolbar>
     <infobits-content></infobits-content>
   </div>
@@ -7,11 +7,6 @@
 
 <script>
 export default {
-  computed: {
-    cursor() {
-      return this.$store.state.cursor
-    }
-  },
   components: {
     "toolbar":          require("./toolbar.vue"),
     "infobits-content": require("./infobits-content.vue"),

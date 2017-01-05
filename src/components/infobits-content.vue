@@ -17,21 +17,25 @@ export default {
     this.$dragula.options("infobits", {
       accepts: (el, target, source, sibling) => {
         var onTree = this.panel(target) == "tree"
-        var onSelf = /* el != target && */ el.contains(target)
-        // console.log("### accepts(onSelf)", onSelf)
+        var onSelf = el.contains(target)
         var accept = onTree && !onSelf
-        // this.$store.dispatch("setCursor", accept ? "auto" : "not-allowed")   // doesn't work
+        // console.log("accepts(onTree, onSelf, accept)", onTree, onSelf, accept)
+        this.setCursor(accept ? "move" : "not-allowed")
         return accept
       },
       copy: (el, source) => this.panel(source) == "inbox"
     })
     this.$dragula.eventBus.$on("drop-model", this.dropModel)
-    this.$dragula.eventBus.$on("shadow", this.shadow)
+    this.$dragula.eventBus.$on("shadow",     this.shadow)
+    this.$dragula.eventBus.$on("drag",       this.drag)
+    this.$dragula.eventBus.$on("dragend",    this.dragend)
   },
 
   beforeDestroy() {
     this.$dragula.eventBus.$off("drop-model", this.dropModel)
-    this.$dragula.eventBus.$off("shadow", this.shadow)
+    this.$dragula.eventBus.$off("shadow",     this.shadow)
+    this.$dragula.eventBus.$off("drag",       this.drag)
+    this.$dragula.eventBus.$off("dragend",    this.dragend)
   },
 
   methods: {
@@ -41,9 +45,9 @@ export default {
       var predNodeId
       var cl = dropTarget.el.classList
       if (cl.contains("infobits-tree")) {
-        parentNodeId = this.$store.state.treePanel.tree.id            // dropped on first-level childs
+        parentNodeId = this.$store.state.treePanel.tree.id            // dropped between top-level childs
       } else if (cl.contains("child-nodes")) {
-        parentNodeId = dropTarget.el.parentElement.__vue__.node.id    // dropped on deeper-level childs
+        parentNodeId = dropTarget.el.parentElement.__vue__.node.id    // dropped between deeper-level childs
       } else if (cl.contains("drop-area")) {
         parentNodeId = dropTarget.el.parentElement.parentElement.__vue__.node.id
       } else {
@@ -66,6 +70,14 @@ export default {
       }
     },
 
+    drag(bagName, el, source) {
+      this.setCursor("move")
+    },
+
+    dragend(bagName, el) {
+      this.setCursor("auto")
+    },
+
     panel(el) {
       if (el.classList.contains("infobits-tree") ||
           el.classList.contains("child-nodes")   ||
@@ -76,6 +88,10 @@ export default {
       } else {
         throw "Unknown Dragula container: " + el
       }
+    },
+
+    setCursor(cursor) {
+      document.body.style.cursor = cursor
     }
   },
 
