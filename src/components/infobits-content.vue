@@ -40,7 +40,7 @@ export default {
       var parentNodeId
       var predNodeId
       var cl = dropTarget.el.classList
-      if (cl.contains("vue-tree")) {
+      if (cl.contains("infobits-tree")) {
         parentNodeId = this.$store.state.treePanel.tree.id            // dropped on first-level childs
       } else if (cl.contains("child-nodes")) {
         parentNodeId = dropTarget.el.parentElement.__vue__.node.id    // dropped on deeper-level childs
@@ -62,13 +62,13 @@ export default {
 
     shadow(bagName, el, container, source) {
       if (this.panel(source) == "inbox") {
-        el.classList.add("vue-tree-node", "inbox-transit")
+        el.classList.add("tree-node", "inbox-transit")
       }
     },
 
     panel(el) {
-      if (el.classList.contains("vue-tree")    ||
-          el.classList.contains("child-nodes") ||
+      if (el.classList.contains("infobits-tree") ||
+          el.classList.contains("child-nodes")   ||
           el.classList.contains("drop-area")) {
         return "tree"
       } else if (el.parentElement.id == "inbox") {

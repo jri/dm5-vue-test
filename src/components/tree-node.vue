@@ -1,5 +1,5 @@
 <template>
-  <li class="vue-tree-node">
+  <li class="tree-node">
     <!-- Node -->
     <div class="content">
       <div v-if="hasChilds" :class="['arrow', isCollapsed ? 'collapsed' : 'expanded']" @click="toggleCollapsed"></div>
@@ -9,14 +9,14 @@
     </div>
     <!-- Child nodes -->
     <ul class="child-nodes" v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
-      <vue-tree-node v-for="node in node.nodes" :node="node" :key="node.id"></vue-tree-node>
+      <tree-node v-for="node in node.nodes" :node="node" :key="node.id"></tree-node>
     </ul>
   </li>
 </template>
 
 <script>
 export default {
-  name: "vue-tree-node",
+  name: "tree-node",
   props: ["node"],
   computed: {
     isCollapsed() {
@@ -44,22 +44,22 @@ export default {
 </script>
 
 <style>
-li.vue-tree-node {
+li.tree-node {
   list-style-type: none;
   margin-top: 0.8em;      /* should match "ul > li" style in inbox.vue */
 }
 
-li.vue-tree-node .content {
+li.tree-node .content {
   display: flex;
 }
 
-li.vue-tree-node .content .drop-area {
+li.tree-node .content .drop-area {
   flex: 0 0 9px;
   margin-right: 0.6em;
   border: 1px dotted lightgray;
 }
 
-li.vue-tree-node .content .arrow {
+li.tree-node .content .arrow {
   flex: 0 0 11px;
   margin-right: 0.6em;
   background-repeat: no-repeat;
@@ -67,23 +67,23 @@ li.vue-tree-node .content .arrow {
   opacity: 0.4;
 }
 
-li.vue-tree-node .content .arrow:hover {
+li.tree-node .content .arrow:hover {
   opacity: 1;
 }
 
-li.vue-tree-node .content .arrow.collapsed {
+li.tree-node .content .arrow.collapsed {
   background-image: url(assets/collapsed.png);
 }
 
-li.vue-tree-node .content .arrow.expanded {
+li.tree-node .content .arrow.expanded {
   background-image: url(assets/expanded.png);
 }
 
-li.vue-tree-node .content .infobit {
+li.tree-node .content .infobit {
   min-width: 0;           /* make word-wrap effective in a flex layout */
 }
 
-li.vue-tree-node.inbox-transit {
+li.tree-node.inbox-transit {
   margin-left: 20.6px;    /* must match the arrow style: 11px width + 0.6em margin */
 }
 </style>

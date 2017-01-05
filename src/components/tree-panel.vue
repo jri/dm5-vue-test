@@ -2,7 +2,7 @@
   <div id="tree-panel">
     <h3>Tree</h3>
     <user-select></user-select>
-    <vue-tree :tree="tree"></vue-tree>
+    <infobits-tree :tree="tree"></infobits-tree>
   </div>
 </template>
 
@@ -14,8 +14,8 @@ export default {
     }
   },
   components: {
-    "user-select": require("./user-select.vue"),
-    "vue-tree":    require("./vue-tree.vue")
+    "user-select":   require("./user-select.vue"),
+    "infobits-tree": require("./infobits-tree.vue")
   }
 }
 </script>
