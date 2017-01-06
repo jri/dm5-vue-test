@@ -57,13 +57,13 @@ li.tree-node .content {
 
 li.tree-node .content .drop-area {
   flex: 0 0 9px;
-  margin-right: 0.6em;
+  margin-right: 0.4em;    /* should match ".arrow" style below */
   border: 1px dotted lightgray;
 }
 
 li.tree-node .content .arrow {
   flex: 0 0 11px;
-  margin-right: 0.6em;
+  margin-right: 0.4em;    /* should match ".drop-area" style above */
   background-repeat: no-repeat;
   background-position: 0px 5px;
   opacity: 0.4;
@@ -86,6 +86,6 @@ li.tree-node .content .infobit {
 }
 
 li.tree-node.inbox-transit {
-  margin-left: 20.6px;    /* must match the arrow style: 11px width + 0.6em margin */
+  margin-left: 17.4px;    /* should match the ".arrow" style: 11px width + 0.4em margin */
 }
 </style>

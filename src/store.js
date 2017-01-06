@@ -34,7 +34,7 @@ const store = new Vuex.Store({
   actions: {
 
     initStore({state}, user) {
-      console.log("Init store", user)
+      console.log("initStore", user)
       state.user = user
       state.treePanel.selectedUser = user
       http.get("/core/topic/by_type/dm4.accesscontrol.username")
