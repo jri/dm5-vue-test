@@ -3,8 +3,8 @@
     <h3>Inbox</h3>
     <ul v-dragula="infobits" bag="infobits">
       <li v-for="infobit in infobits" :key="infobit.id">
-        <infobit class="infobit" :infobit="infobit">
-          <span class="action-button fa fa-remove" @click="remove(infobit.id)"></span>
+        <infobit :infobit="infobit">
+          <span class="action-button fa fa-fw fa-remove" @click="remove(infobit.id)"></span>
         </infobit>
         <span class="debug">{{infobit.id}}</span>
       </li>

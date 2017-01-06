@@ -9,10 +9,10 @@
 <script>
 export default {
   computed: {
-    treePanel: function() {
+    treePanel() {
       return this.$store.state.treePanel
     },
-    users: function() {
+    users() {
       return this.treePanel.users
     }
   }

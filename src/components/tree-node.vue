@@ -4,8 +4,9 @@
     <div class="content">
       <div v-if="hasChilds" :class="['arrow', isCollapsed ? 'collapsed' : 'expanded']" @click="toggleCollapsed"></div>
       <div v-else class="drop-area" v-dragula="[]" bag="infobits"></div>
-      <infobit class="infobit" :infobit="node.infobit">
-        <span class="action-button fa fa-remove" @click="remove"></span>
+      <infobit :infobit="node.infobit">
+        <span class="action-button fa fa-fw fa-level-up" @click="setSubtreeFilter"></span>
+        <span class="action-button fa fa-fw fa-remove" @click="remove"></span>
       </infobit>
       <span class="debug">{{node.id}}</span>
     </div>
@@ -29,6 +30,9 @@ export default {
     }
   },
   methods: {
+    setSubtreeFilter() {
+      this.$store.dispatch("setSubtreeFilter", this.node)
+    },
     remove() {
       this.$store.dispatch("removeNodeFromTree", this.node.id)
     },
@@ -86,6 +90,6 @@ li.tree-node .content .infobit {
 }
 
 li.tree-node.inbox-transit {
-  margin-left: 17.4px;    /* should match the ".arrow" style: 11px width + 0.4em margin */
+  margin-left: 17.4px;    /* should match ".arrow" style: 11px width + 0.4em margin */
 }
 </style>

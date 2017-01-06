@@ -6,13 +6,15 @@ import typeDefs from "./infobit-typedefs"
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+
   state: {
     user: undefined,          // the logged in user (string)
     infobitId: undefined,     // selected infobit
     treePanel: {
       users: undefined,
       selectedUser: undefined,
-      tree: {nodes: []}
+      tree: undefined,        // the entire tree
+      subtree: undefined      // the visible tree (equals tree if no subtree filter is set)
     },
     inbox: {
       infobits: []            // set to empty (instead undefined) for initial sort
@@ -41,6 +43,9 @@ const store = new Vuex.Store({
         .then(response => state.treePanel.users = response.data)
       http.get("/infobits/inbox")
         .then(response => state.inbox.infobits = response.data.infobits)
+      //
+      state.treePanel.tree = {nodes: []}
+      state.treePanel.subtree = state.treePanel.tree
     },
 
     selectInfobit({state}, infobitId) {
@@ -51,14 +56,24 @@ const store = new Vuex.Store({
 
     selectTree({state}, username) {
       console.log("selectTree", username)
-      http.get("/infobits/tree/infobits.tree." + username)
-        .then(response => state.treePanel.tree = response.data)
+      http.get("/infobits/tree/infobits.tree." + username).then(response => {
+        state.treePanel.tree = response.data
+        state.treePanel.subtree = state.treePanel.tree
+      })
     },
 
     setCollapsed({state}, {node, collapsed}) {
       console.log("setCollapsed", node.id, collapsed)
       node.collapsed = collapsed
       http.put("/infobits/tree/node/" + node.id + "/collapsed/" + collapsed)
+    },
+
+    setSubtreeFilter({state}, node) {
+      state.treePanel.subtree = node
+    },
+
+    resetSubtreeFilter({state}) {
+      state.treePanel.subtree = state.treePanel.tree
     },
 
     insertInfobitInTree({state}, {infobitId, parentNodeId, predNodeId}) {
