@@ -4,7 +4,9 @@
     <ul v-dragula="infobits" bag="infobits">
       <li v-for="infobit in infobits" :key="infobit.id">
         <div class="content">
-          <infobit :infobit="infobit" :removeId="infobit.id" class="infobit" @remove="remove"></infobit>
+          <infobit class="infobit" :infobit="infobit">
+            <span class="action-button fa fa-remove" @click="remove(infobit.id)"></span>
+          </infobit>
           <span class="debug">{{infobit.id}}</span>
         </div>
       </li>

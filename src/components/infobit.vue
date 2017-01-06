@@ -2,13 +2,15 @@
   <span :class="['infobit', 'clickable', {highlight: isSelected}]" @click="select">
     <span :class="['fa', iconClass]"></span>
     <span class="title">{{infobit.title}}</span>
-    <span class="remove-button fa fa-remove" @click="remove"></span>
+    <span class="button-panel">
+      <slot></slot>
+    </span>
   </span>
 </template>
 
 <script>
 export default {
-  props: ["infobit", "removeId"],
+  props: ["infobit"],
   computed: {
     isSelected() {
       return this.$store.state.infobitId == this.infobit.id
@@ -20,9 +22,6 @@ export default {
   methods: {
     select() {
       this.$store.dispatch("selectInfobit", this.infobit.id)
-    },
-    remove() {
-      this.$emit("remove", this.removeId)
     }
   }
 }
@@ -38,19 +37,19 @@ export default {
   line-height: 1.3em;
 }
 
-.infobit .remove-button {
+.infobit .button-panel {
   position: absolute;
   bottom: 0;
   right: 0;
-  visibility: hidden;
   background-color: white;
+  visibility: hidden;
 }
 
-.infobit:hover .remove-button {
+.infobit:hover .button-panel {
   visibility: visible;
 }
 
-.infobit .remove-button:hover {
+.infobit .button-panel .action-button:hover {
   background-color: lightgray;
 }
 </style>

@@ -4,7 +4,9 @@
     <div class="content">
       <div v-if="hasChilds" :class="['arrow', isCollapsed ? 'collapsed' : 'expanded']" @click="toggleCollapsed"></div>
       <div v-else class="drop-area" v-dragula="[]" bag="infobits"></div>
-      <infobit :infobit="node.infobit" :removeId="node.id" class="infobit" @remove="remove"></infobit>
+      <infobit class="infobit" :infobit="node.infobit">
+        <span class="action-button fa fa-remove" @click="remove"></span>
+      </infobit>
       <span class="debug">{{node.id}}</span>
     </div>
     <!-- Child nodes -->
@@ -27,8 +29,8 @@ export default {
     }
   },
   methods: {
-    remove(nodeId) {
-      this.$store.dispatch("removeNodeFromTree", nodeId)
+    remove() {
+      this.$store.dispatch("removeNodeFromTree", this.node.id)
     },
     toggleCollapsed() {
       this.$store.dispatch("setCollapsed", {
