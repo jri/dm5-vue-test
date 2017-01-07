@@ -2,10 +2,12 @@
   <div id="tree-panel">
     <h3>Tree</h3>
     <user-select></user-select>
+    <!-- Subtree Filter -->
     <div class="subtree-filter" v-if="subtreeFilter">
       <infobit :infobit="subtree.infobit"></infobit>
       <button class="clickable" @click="resetSubtreeFilter">Reset</button>
     </div>
+    <!-- Tree -->
     <infobits-tree :tree="subtree"></infobits-tree>
   </div>
 </template>
@@ -47,6 +49,7 @@ export default {
 
 #tree-panel .subtree-filter {
   display: flex;
+  align-items: center;
   margin-top: 1em;
   border-top: 1px dotted gray;
   border-bottom: 1px dotted gray;
@@ -56,9 +59,11 @@ export default {
 
 #tree-panel .subtree-filter .infobit {
   flex: auto;
+  min-width: 0;     /* make word-wrap effective in a flex layout */
 }
 
 #tree-panel .subtree-filter button {
+  flex: none;
   visibility: hidden;
 }
 
