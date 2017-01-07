@@ -14,6 +14,11 @@
         :mode="mode" :model="infobit.details" :prop="detailDef.prop">
       </component>
     </div>
+    <!-- Meta Data -->
+    <div class="field" v-if="infoMode">
+      <div class="label">Created: {{infobit.created | datetime}}</div>
+      <div class="label">Creator: {{infobit.creator}}</div>
+    </div>
     <!-- Button -->
     <button class="submit clickable" @click="buttonAction">{{buttonLabel}}</button>
   </div>
@@ -57,6 +62,11 @@ export default {
     buttonAction() {
       var action = this.infoMode ? "editInfobit" : "submitInfobit"
       this.$store.dispatch(action)
+    }
+  },
+  filters: {
+    datetime: function(timestamp) {
+      return new Date(timestamp).toLocaleString()
     }
   },
   components: {
