@@ -2,7 +2,7 @@
   <div id="inbox">
     <h3>Inbox</h3>
     <ul v-dragula="infobits" bag="infobits">
-      <li v-for="infobit in infobits" :key="infobit.id">
+      <li class="inbox-item" v-for="infobit in infobits" :key="infobit.id">
         <infobit :infobit="infobit">
           <span class="action-button fa fa-fw fa-remove" @click="remove(infobit.id)"></span>
         </infobit>
@@ -43,7 +43,8 @@ export default {
   padding-left: 0;
 }
 
-#inbox ul > li {
+/* Note: rule is independent from DOM structure in order to apply to mirror element as well */
+.inbox-item {
   list-style-type: none;
   margin-top: 0.8em;      /* should match "li.tree-node" style in tree-node.vue */
 }

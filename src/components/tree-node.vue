@@ -78,18 +78,18 @@ li.tree-node .content .arrow:hover {
 }
 
 li.tree-node .content .arrow.collapsed {
-  background-image: url(assets/collapsed.png);
+  background-image: url("assets/collapsed.png");
 }
 
 li.tree-node .content .arrow.expanded {
-  background-image: url(assets/expanded.png);
+  background-image: url("assets/expanded.png");
 }
 
 li.tree-node .content .infobit {
   min-width: 0;           /* make word-wrap effective in a flex layout */
 }
 
-li.tree-node.inbox-transit {
+.inbox-transit {
   margin-left: 17.4px;    /* should match ".arrow" style: 11px width + 0.4em margin */
 }
 </style>

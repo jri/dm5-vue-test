@@ -16,9 +16,18 @@ export default {
 
   data() {
     return {
-      dragging: false,        // used for cursor calculation
-      acceptDrop: false,      // used for cursor calculation
-      altKey: false           // used for cursor calculation
+      // drag state (affects cursor shape)
+      dragging:   false,
+      acceptDrop: false,
+      altKey:     false,
+      //
+      events: {
+        "drop-model": this.dropModel,
+        "drag":       this.drag,
+        "dragend":    this.dragend,
+        "cloned":     this.cloned,
+        "shadow":     this.shadow,
+      }
     }
   },
 
@@ -36,27 +45,20 @@ export default {
       accepts: (el, target, source, sibling) => {
         var onTree = this.panel(target) == "tree"
         var onSelf = el.contains(target)
-        var accept = onTree && !onSelf
-        // console.log("acceptDrop", accept)
-        this.acceptDrop = accept
+        var acceptDrop = onTree && !onSelf
+        // console.log("acceptDrop", acceptDrop)
+        this.acceptDrop = acceptDrop
         this.updateCursor()
-        return accept
+        return acceptDrop
       },
       copy: (el, source) => this.panel(source) == "inbox"
     })
-    this.$dragula.eventBus.$on("drop-model", this.dropModel)
-    this.$dragula.eventBus.$on("shadow",     this.shadow)
-    this.$dragula.eventBus.$on("drag",       this.drag)
-    this.$dragula.eventBus.$on("dragend",    this.dragend)
-    this.$dragula.eventBus.$on("cloned",     this.cloned)
+    //
+    this.eventHandlers("$on")
   },
 
   beforeDestroy() {
-    this.$dragula.eventBus.$off("drop-model", this.dropModel)
-    this.$dragula.eventBus.$off("shadow",     this.shadow)
-    this.$dragula.eventBus.$off("drag",       this.drag)
-    this.$dragula.eventBus.$off("dragend",    this.dragend)
-    this.$dragula.eventBus.$off("cloned",     this.cloned)
+    this.eventHandlers("$off")
   },
 
   methods: {
@@ -85,14 +87,6 @@ export default {
       }
     },
 
-    // Fired each time when the "feedback shadow" element (also called "visual aid shadow") is replaced while a drag.
-    // The "feedback shadow" element is a clone of the "mirror element", the element following the mouse while a drag.
-    shadow(bagName, el, container, source) {
-      if (this.panel(source) == "inbox") {
-        el.classList.add("tree-node", "inbox-transit")
-      }
-    },
-
     drag(bagName, el, source) {
       // Note: el is the original element. To manipulate the mirror element use the "cloned" event.
       this.dragging = true
@@ -104,10 +98,21 @@ export default {
       this.updateCursor()
     },
 
+    // Fired once after drag start when the mirror element is cloned from the original element.
+    // The "mirror element" is the element that follows the mouse while dragging.
     cloned(bagName, clone, original, type) {
+      // remove infobit hover behavior from mirror element
       if (type == "mirror") {
-        // remove the infobit hover behavior from the mirror element
         clone.querySelector(".infobit").classList.add("no-events")
+      }
+    },
+
+    // Fired each time when the "feedback shadow" element (also called "visual aid shadow") is placed while a drag.
+    // "el" is the shadow element.
+    shadow(bagName, el, container, source) {
+      // when dragged from inbox adapt shadow element to tree style
+      if (this.panel(source) == "inbox") {
+        el.classList.add("inbox-transit")
       }
     },
 
@@ -126,6 +131,13 @@ export default {
     updateCursor() {
       var cursor = this.dragging ? this.acceptDrop ? this.altKey ? "copy" : "move" : "not-allowed" : "auto"
       document.body.style.cursor = cursor
+    },
+
+    eventHandlers(funcName) {
+      var eb = this.$dragula.eventBus
+      for (event in this.events) {
+        eb[funcName].call(eb, event, this.events[event])
+      }
     }
   },
 
