@@ -24,7 +24,8 @@ const store = new Vuex.Store({
       mode: "info",           // "info" or "form"
       formAction: undefined   // "create" or "update"
     },
-    typeDefs
+    typeDefs,
+    modKeys: {}
   },
 
   getters: {
@@ -119,6 +120,10 @@ const store = new Vuex.Store({
       }
     },
 
+    setModKeys({state}, modKeys) {
+      state.modKeys = modKeys
+    },
+
     // WebSocket messages
 
     _addInfobitToInbox({state}, infobit) {
@@ -168,11 +173,10 @@ const store = new Vuex.Store({
   }
 })
 
-store.watch(function(state) {
-  return state.treePanel.selectedUser
-}, function(username) {
-  store.dispatch("selectTree", username)
-})
+store.watch(
+  state => state.treePanel.selectedUser,
+  username => store.dispatch("selectTree", username)
+)
 
 export default store
 

@@ -14,6 +14,11 @@ Vue.use(VueDragula)
 
 export default {
   created() {
+    this.$store.watch(
+      state => state.modKeys.altKey,
+      altKey => console.log("Alt key", altKey)
+    )
+    //
     this.$dragula.options("infobits", {
       accepts: (el, target, source, sibling) => {
         var onTree = this.panel(target) == "tree"

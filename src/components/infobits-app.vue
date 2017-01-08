@@ -1,5 +1,5 @@
 <template>
-  <div id="infobits-app">
+  <div id="infobits-app" tabindex="-1" @keydown="key" @keyup="key">
     <toolbar></toolbar>
     <infobits-content></infobits-content>
   </div>
@@ -7,6 +7,17 @@
 
 <script>
 export default {
+  mounted() {
+    this.$el.focus()
+  },
+  methods: {
+    key(e) {
+      this.$store.dispatch("setModKeys", {
+        shiftKey: e.shiftKey,
+        altKey:   e.altKey
+      })
+    }
+  },
   components: {
     "toolbar":          require("./toolbar.vue"),
     "infobits-content": require("./infobits-content.vue"),
