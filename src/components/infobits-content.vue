@@ -82,8 +82,13 @@ export default {
         console.log("insertInfobitInTree(infobitId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
         this.$store.dispatch("insertInfobitInTree", {infobitId: droppedId, parentNodeId, predNodeId})
       } else {
-        console.log("moveSubtree(rootNodeId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
-        this.$store.dispatch("moveSubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
+        if (this.altKey) {
+          console.log("copySubtree(rootNodeId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
+          this.$store.dispatch("copySubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
+        } else {
+          console.log("moveSubtree(rootNodeId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
+          this.$store.dispatch("moveSubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
+        }
       }
     },
 

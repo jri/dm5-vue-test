@@ -15,7 +15,7 @@ export default {
     return {
       username: "",
       password: "",
-      message: ""
+      message:  ""
     }
   },
   methods: {

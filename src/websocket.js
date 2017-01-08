@@ -32,8 +32,14 @@ function dispatcher(message) {
       predNodeId:   message.predNodeId
     })
     break
-  //case "copySubtree":               TODO
+  case "copySubtree":
+    store.dispatch("_copySubtree", {
+      tree:         message.tree,
+      parentNodeId: message.parentNodeId,
+      predNodeId:   message.predNodeId
+    })
+    break
   default:
-    throw "Unknown message \"" + message.command + "\" received"
+    throw "[Infobits] Unknown WebSocket message \"" + message.command + "\" received"
   }
 }

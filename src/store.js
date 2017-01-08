@@ -93,6 +93,10 @@ const store = new Vuex.Store({
       http.put("/infobits/tree/node/" + rootNodeId + "/parent/" + parentNodeId + "/pred/" + predNodeId)
     },
 
+    copySubtree({state}, {rootNodeId, parentNodeId, predNodeId}) {
+      http.post("/infobits/tree/node/" + rootNodeId + "/parent/" + parentNodeId + "/pred/" + predNodeId)
+    },
+
     newInfobit({state}, type) {
       console.log("newInfobit", type)
       state.infobitId = undefined
@@ -169,6 +173,10 @@ const store = new Vuex.Store({
       var node = found.nodes.splice(found.i, 1)[0]
       // insert at target
       insertNode(node, parentNodeId, predNodeId)
+    },
+
+    _copySubtree({state}, {tree, parentNodeId, predNodeId}) {
+      insertNode(tree, parentNodeId, predNodeId)
     }
   }
 })
