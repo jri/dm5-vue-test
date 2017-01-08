@@ -51,4 +51,8 @@ export default {
 .infobit .button-panel .action-button:hover {
   background-color: lightgray;
 }
+
+.infobit.no-events {
+  pointer-events: none;
+}
 </style>

@@ -13,10 +13,23 @@ import VueDragula from "vue-dragula"
 Vue.use(VueDragula)
 
 export default {
+
+  data() {
+    return {
+      dragging: false,        // used for cursor calculation
+      acceptDrop: false,      // used for cursor calculation
+      altKey: false           // used for cursor calculation
+    }
+  },
+
   created() {
     this.$store.watch(
       state => state.modKeys.altKey,
-      altKey => console.log("Alt key", altKey)
+      altKey => {
+        console.log("Alt key", altKey)
+        this.altKey = altKey
+        this.updateCursor()
+      }
     )
     //
     this.$dragula.options("infobits", {
@@ -24,8 +37,9 @@ export default {
         var onTree = this.panel(target) == "tree"
         var onSelf = el.contains(target)
         var accept = onTree && !onSelf
-        // console.log("accepts(onTree, onSelf, accept)", onTree, onSelf, accept)
-        this.setCursor(accept ? "move" : "not-allowed")
+        // console.log("acceptDrop", accept)
+        this.acceptDrop = accept
+        this.updateCursor()
         return accept
       },
       copy: (el, source) => this.panel(source) == "inbox"
@@ -34,6 +48,7 @@ export default {
     this.$dragula.eventBus.$on("shadow",     this.shadow)
     this.$dragula.eventBus.$on("drag",       this.drag)
     this.$dragula.eventBus.$on("dragend",    this.dragend)
+    this.$dragula.eventBus.$on("cloned",     this.cloned)
   },
 
   beforeDestroy() {
@@ -41,6 +56,7 @@ export default {
     this.$dragula.eventBus.$off("shadow",     this.shadow)
     this.$dragula.eventBus.$off("drag",       this.drag)
     this.$dragula.eventBus.$off("dragend",    this.dragend)
+    this.$dragula.eventBus.$off("cloned",     this.cloned)
   },
 
   methods: {
@@ -69,6 +85,8 @@ export default {
       }
     },
 
+    // Fired each time when the "feedback shadow" element (also called "visual aid shadow") is replaced while a drag.
+    // The "feedback shadow" element is a clone of the "mirror element", the element following the mouse while a drag.
     shadow(bagName, el, container, source) {
       if (this.panel(source) == "inbox") {
         el.classList.add("tree-node", "inbox-transit")
@@ -76,11 +94,21 @@ export default {
     },
 
     drag(bagName, el, source) {
-      this.setCursor("move")
+      // Note: el is the original element. To manipulate the mirror element use the "cloned" event.
+      this.dragging = true
+      this.updateCursor()
     },
 
     dragend(bagName, el) {
-      this.setCursor("auto")
+      this.dragging = false
+      this.updateCursor()
+    },
+
+    cloned(bagName, clone, original, type) {
+      if (type == "mirror") {
+        // remove the infobit hover behavior from the mirror element
+        clone.querySelector(".infobit").classList.add("no-events")
+      }
     },
 
     panel(el) {
@@ -95,7 +123,8 @@ export default {
       }
     },
 
-    setCursor(cursor) {
+    updateCursor() {
+      var cursor = this.dragging ? this.acceptDrop ? this.altKey ? "copy" : "move" : "not-allowed" : "auto"
       document.body.style.cursor = cursor
     }
   },
