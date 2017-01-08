@@ -130,7 +130,7 @@ const store = new Vuex.Store({
 
     // WebSocket messages
 
-    _addInfobitToInbox({state}, infobit) {
+    _addInfobitToInbox({state}, {infobit}) {
       state.inbox.infobits.push(infobit)
       state.infobitId = infobit.id
       state.detailPanel.infobit = infobit
@@ -146,16 +146,16 @@ const store = new Vuex.Store({
       insertNode(node, parentNodeId, predNodeId)
     },
 
-    _removeInfobitFromInbox({state}, infobitId) {
+    _removeInfobitFromInbox({state}, {infobitId}) {
       findInfobitInInbox(infobitId, (_, i) => state.inbox.infobits.splice(i, 1))
     },
 
-    _removeNodeFromTree({state}, nodeId) {
+    _removeNodeFromTree({state}, {nodeId}) {
       var found = findNode(nodeId)
       found.nodes.splice(found.i, 1)
     },
 
-    _updateInfobit({state}, infobit) {
+    _updateInfobit({state}, {infobit}) {
       findInfobitInInbox(infobit.id, updateTitle)
       findInfobitInTree(infobit.id, updateTitle)
 
@@ -164,11 +164,11 @@ const store = new Vuex.Store({
       }
     },
 
-    _moveSubtree({state}, {nodeId, parentNodeId, predNodeId}) {
+    _moveSubtree({state}, {rootNodeId, parentNodeId, predNodeId}) {
       // remove from source
-      var found = findNode(nodeId)
+      var found = findNode(rootNodeId)
       if (!found) {
-        throw "Node " + nodeId + " not found in tree"
+        throw "Node " + rootNodeId + " not found in tree"
       }
       var node = found.nodes.splice(found.i, 1)[0]
       // insert at target
