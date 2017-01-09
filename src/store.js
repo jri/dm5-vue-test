@@ -8,6 +8,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 
   state: {
+    typeDefs,                 // infobit type definitions
     user: undefined,          // the logged in user (string)
     infobitId: undefined,     // selected infobit
     treePanel: {
@@ -24,7 +25,6 @@ const store = new Vuex.Store({
       mode: "info",           // "info" or "form"
       formAction: undefined   // "create" or "update"
     },
-    typeDefs,
     modKeys: {}
   },
 

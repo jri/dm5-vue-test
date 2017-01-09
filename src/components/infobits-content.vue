@@ -138,13 +138,16 @@ export default {
     },
 
     updateCursor() {
+      // Note: updating the cursor shape via binding the style attribute does not work properly. I don't know why.
+      // See the stash "cursor-style-binding". It does only work when setting the body style, but the body element
+      // is not covered by our Vue root instance. So we do the update programmatically here.
       var cursor = this.dragging ? this.acceptDrop ? this.copy ? "copy" : "move" : "no-drop" : "auto"
       document.body.style.cursor = cursor
     },
 
     eventHandlers(funcName) {
       var eb = this.$dragula.eventBus
-      for (event in this.events) {
+      for (var event in this.events) {
         eb[funcName].call(eb, event, this.events[event])
       }
     }
