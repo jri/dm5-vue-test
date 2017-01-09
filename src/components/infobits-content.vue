@@ -19,7 +19,7 @@ export default {
       // drag state (affects cursor shape)
       dragging:   false,
       acceptDrop: false,
-      altKey:     false,
+      copy:       false,
       //
       events: {
         "drop-model": this.dropModel,
@@ -31,27 +31,31 @@ export default {
     }
   },
 
+  computed: {
+    altKey() {
+      return this.$store.state.modKeys.altKey
+    }
+  },
+
   created() {
-    this.$store.watch(
-      state => state.modKeys.altKey,
-      altKey => {
-        console.log("Alt key", altKey)
-        this.altKey = altKey
-        this.updateCursor()
-      }
-    )
-    //
     this.$dragula.options("infobits", {
       accepts: (el, target, source, sibling) => {
         var onTree = this.panel(target) == "tree"
         var onSelf = el.contains(target)
         var acceptDrop = onTree && !onSelf
-        // console.log("acceptDrop", acceptDrop)
         this.acceptDrop = acceptDrop
         this.updateCursor()
         return acceptDrop
       },
-      copy: (el, source) => this.panel(source) == "inbox"
+      copy: (el, source) => {
+        if (this.panel(source) == "inbox") {
+          this.copy = false
+          return true
+        } else {
+          this.copy = this.altKey
+          return this.copy
+        }
+      }
     })
     //
     this.eventHandlers("$on")
@@ -82,7 +86,7 @@ export default {
         console.log("insertInfobitInTree(infobitId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
         this.$store.dispatch("insertInfobitInTree", {infobitId: droppedId, parentNodeId, predNodeId})
       } else {
-        if (this.altKey) {
+        if (this.copy) {
           console.log("copySubtree(rootNodeId, parentNodeId, predNodeId)", droppedId, parentNodeId, predNodeId)
           this.$store.dispatch("copySubtree", {rootNodeId: droppedId, parentNodeId, predNodeId})
         } else {
@@ -134,7 +138,7 @@ export default {
     },
 
     updateCursor() {
-      var cursor = this.dragging ? this.acceptDrop ? this.altKey ? "copy" : "move" : "not-allowed" : "auto"
+      var cursor = this.dragging ? this.acceptDrop ? this.copy ? "copy" : "move" : "no-drop" : "auto"
       document.body.style.cursor = cursor
     },
 
