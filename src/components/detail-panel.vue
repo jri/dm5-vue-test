@@ -20,7 +20,9 @@
       <div class="label">Creator: {{infobit.creator}}</div>
     </div>
     <!-- Button -->
-    <button class="submit clickable" @click="buttonAction">{{buttonLabel}}</button>
+    <button :class="['submit', {clickable: buttonEnabled}]" :disabled="!buttonEnabled" @click="buttonAction">
+      {{buttonLabel}}
+    </button>
   </div>
 </template>
 
@@ -28,7 +30,13 @@
 export default {
   computed: {
     infobit() {
-      return this.$store.state.detailPanel.infobit
+      return this.detailPanel.infobit
+    },
+    editable() {
+      return this.detailPanel.editable
+    },
+    detailPanel() {
+      return this.$store.state.detailPanel
     },
     detailDefs() {
       return this.typeDef.detailDefs
@@ -37,7 +45,7 @@ export default {
       return this.typeDef.titleLabel
     },
     mode() {
-      return this.$store.state.detailPanel.mode
+      return this.detailPanel.mode
     },
     infoMode() {
       return this.mode == "info"
@@ -53,6 +61,9 @@ export default {
     },
     buttonLabel() {
       return this.infoMode ? "Edit" : "Submit"
+    },
+    buttonEnabled() {
+      return this.formMode || this.editable
     }
   },
   methods: {

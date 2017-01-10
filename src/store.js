@@ -15,17 +15,18 @@ const store = new Vuex.Store({
       users: undefined,
       selectedUser: undefined,
       tree: undefined,        // the entire tree
-      subtree: undefined      // the visible tree (equals tree if no subtree filter is set)
+      subtree: undefined      // the displayed tree (equals tree if no subtree filter is set)
     },
     inbox: {
       infobits: []            // set to empty (instead undefined) for initial sort
     },
     detailPanel: {
-      infobit: undefined,
+      infobit: undefined,     // the displayed infobit
+      editable: false,        // is the displayed infobit editable by the current user?
       mode: "info",           // "info" or "form"
       formAction: undefined   // "create" or "update"
     },
-    modKeys: {}
+    modKeys: {}               // state of modifier keys ("shiftKey" and "altKey" booleans)
   },
 
   getters: {
@@ -53,6 +54,8 @@ const store = new Vuex.Store({
       state.infobitId = infobitId
       http.get("/infobits/infobit/" + infobitId)
         .then(response => state.detailPanel.infobit = response.data)
+      http.get("/accesscontrol/topic/" + infobitId)
+        .then(response => state.detailPanel.editable = response.data["dm4.accesscontrol.operation.write"])
     },
 
     selectTree({state}, username) {
@@ -116,6 +119,7 @@ const store = new Vuex.Store({
     submitInfobit({state}) {
       console.log("submitInfobit", state.detailPanel.infobit)
       state.detailPanel.mode = "info"
+      state.detailPanel.editable = true
       switch (state.detailPanel.formAction) {
       case "create":
         http.post("/infobits/infobit", state.detailPanel.infobit); break
@@ -132,8 +136,8 @@ const store = new Vuex.Store({
 
     _addInfobitToInbox({state}, {infobit}) {
       state.inbox.infobits.push(infobit)
-      state.infobitId = infobit.id
-      state.detailPanel.infobit = infobit
+      state.infobitId = infobit.id          // ### FIXME: multi user
+      state.detailPanel.infobit = infobit   // ### FIXME: multi user
     },
 
     _insertInfobitInTree({state}, {infobit, nodeId, parentNodeId, predNodeId}) {
