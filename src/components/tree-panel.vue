@@ -2,6 +2,7 @@
   <div id="tree-panel">
     <h3>Tree</h3>
     <user-select></user-select>
+    <spinner :show="loading"></spinner>
     <!-- Subtree Filter -->
     <div class="subtree-filter" v-if="subtreeFilter">
       <infobit :infobit="subtree.infobit"></infobit>
@@ -23,6 +24,9 @@ export default {
     },
     subtreeFilter() {
       return this.subtree != this.treePanel.tree
+    },
+    loading() {
+      return this.treePanel.loading
     }
   },
   methods: {
@@ -33,7 +37,8 @@ export default {
   components: {
     "user-select":   require("./user-select.vue"),
     "infobits-tree": require("./infobits-tree.vue"),
-    "infobit":       require("./infobit.vue")
+    "infobit":       require("./infobit.vue"),
+    "spinner":       require("./spinner.vue")
   }
 }
 </script>

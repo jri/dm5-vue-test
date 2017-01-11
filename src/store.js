@@ -15,10 +15,12 @@ const store = new Vuex.Store({
       users: undefined,
       selectedUser: undefined,
       tree: undefined,        // the entire tree
-      subtree: undefined      // the displayed tree (equals tree if no subtree filter is set)
+      subtree: undefined,     // the displayed tree (equals tree if no subtree filter is set)
+      loading: false          // true while tree is loading (spinner is displayed)
     },
     inbox: {
-      infobits: []            // set to empty (instead undefined) for initial sort
+      infobits: [],           // set to empty (instead undefined) for initial sort
+      loading: false          // true while inbox is loading (spinner is displayed)
     },
     detailPanel: {
       infobit: undefined,     // the displayed infobit
@@ -40,14 +42,18 @@ const store = new Vuex.Store({
     initStore({state}, user) {
       console.log("initStore", user)
       state.user = user
-      state.treePanel.selectedUser = user
-      http.get("/core/topic/by_type/dm4.accesscontrol.username")
-        .then(response => state.treePanel.users = response.data)
-      http.get("/infobits/inbox")
-        .then(response => state.inbox.infobits = response.data.infobits)
       //
-      state.treePanel.tree = {nodes: []}
-      state.treePanel.subtree = state.treePanel.tree
+      state.treePanel.selectedUser = user
+      http.get("/core/topic/by_type/dm4.accesscontrol.username").then(response =>
+        state.treePanel.users = response.data
+      )
+      resetTree()
+      //
+      state.inbox.loading = true
+      http.get("/infobits/inbox").then(response => {
+        state.inbox.infobits = response.data.infobits
+        state.inbox.loading = false
+      })
     },
 
     selectInfobit({state}, infobitId) {
@@ -60,9 +66,12 @@ const store = new Vuex.Store({
 
     selectTree({state}, username) {
       console.log("selectTree", username)
+      resetTree()
+      state.treePanel.loading = true
       http.get("/infobits/tree/infobits.tree." + username).then(response => {
         state.treePanel.tree = response.data
         state.treePanel.subtree = state.treePanel.tree
+        state.treePanel.loading = false
       })
     },
 
@@ -195,6 +204,13 @@ export default store
 
 
 // === Helper ===
+
+function resetTree() {
+  store.state.treePanel.tree = {nodes: []}
+  store.state.treePanel.subtree = store.state.treePanel.tree
+}
+
+// ---
 
 function insertNode(node, parentNodeId, predNodeId) {
   let nodes   // nodes to insert to

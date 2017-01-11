@@ -1,6 +1,7 @@
 <template>
   <div id="inbox">
     <h3>Inbox</h3>
+    <spinner :show="loading"></spinner>
     <ul v-dragula="infobits" bag="infobits">
       <li class="inbox-item" v-for="infobit in infobits" :key="infobit.id">
         <infobit :infobit="infobit">
@@ -17,6 +18,9 @@ export default {
   computed: {
     infobits() {
       return this.$store.getters.sortedInboxInfobits
+    },
+    loading() {
+      return this.$store.state.inbox.loading
     }
   },
   methods: {
@@ -25,7 +29,8 @@ export default {
     }
   },
   components: {
-    infobit: require("./infobit.vue")
+    infobit: require("./infobit.vue"),
+    spinner: require("./spinner.vue")
   }
 }
 </script>
