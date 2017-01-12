@@ -131,9 +131,15 @@ const store = new Vuex.Store({
       state.detailPanel.editable = true
       switch (state.detailPanel.formAction) {
       case "create":
-        http.post("/infobits/infobit", state.detailPanel.infobit); break
+        http.post("/infobits/infobit", state.detailPanel.infobit).then(response => {
+          var infobit = response.data
+          state.infobitId = infobit.id
+          state.detailPanel.infobit = infobit
+        })
+        break
       case "update":
-        http.put("/infobits/infobit/" + state.detailPanel.infobit.id, state.detailPanel.infobit); break
+        http.put("/infobits/infobit/" + state.detailPanel.infobit.id, state.detailPanel.infobit)
+        break
       }
     },
 
@@ -145,8 +151,6 @@ const store = new Vuex.Store({
 
     _addInfobitToInbox({state}, {infobit}) {
       state.inbox.infobits.push(infobit)
-      state.infobitId = infobit.id          // ### FIXME: multi user
-      state.detailPanel.infobit = infobit   // ### FIXME: multi user
     },
 
     _insertInfobitInTree({state}, {infobit, nodeId, parentNodeId, predNodeId}) {
