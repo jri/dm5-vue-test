@@ -71,14 +71,14 @@ export default {
       var parentNodeId
       var predNodeId
       var cl = dropTarget.el.classList
-      if (cl.contains("infobits-tree")) {
+      if (cl.contains("infobits-tree") || cl.contains("empty-tree-drop-area")) {
         parentNodeId = this.$store.state.treePanel.tree.id            // dropped between top-level childs
       } else if (cl.contains("child-nodes")) {
         parentNodeId = dropTarget.el.parentElement.__vue__.node.id    // dropped between deeper-level childs
       } else if (cl.contains("drop-area")) {
         parentNodeId = dropTarget.el.parentElement.parentElement.__vue__.node.id
       } else {
-        throw "Unexpected drop target: " + dropTarget.el
+        throw "Unknown drop target: " + dropTarget.el
       }
       predNodeId = dropIndex > 0 ? dropTarget.model[dropIndex - 1].id : -1
       //
@@ -128,7 +128,8 @@ export default {
     panel(el) {
       if (el.classList.contains("infobits-tree") ||
           el.classList.contains("child-nodes")   ||
-          el.classList.contains("drop-area")) {
+          el.classList.contains("drop-area")     ||
+          el.classList.contains("empty-tree-drop-area")) {
         return "tree"
       } else if (el.parentElement.id == "inbox") {
         return "inbox"

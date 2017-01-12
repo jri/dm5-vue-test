@@ -10,6 +10,8 @@
     </div>
     <!-- Tree -->
     <infobits-tree :tree="subtree"></infobits-tree>
+    <!-- Empty Tree Drop Area -->
+    <div class="empty-tree-drop-area" v-if="emptyTree" v-dragula="[]" bag="infobits"></div>
   </div>
 </template>
 
@@ -18,6 +20,9 @@ export default {
   computed: {
     treePanel() {
       return this.$store.state.treePanel
+    },
+    emptyTree() {
+      return this.treePanel.tree.nodes.length == 0
     },
     subtree() {
       return this.treePanel.subtree
@@ -74,5 +79,11 @@ export default {
 
 #tree-panel .subtree-filter:hover button {
   visibility: visible;
+}
+
+#tree-panel .empty-tree-drop-area {
+  border: 1px dotted lightgray;
+  width: 75%;
+  height: 4em;
 }
 </style>
