@@ -7,7 +7,7 @@
         <infobit :infobit="infobit">
           <span class="action-button fa fa-fw fa-remove" @click="remove(infobit.id)"></span>
         </infobit>
-        <span class="debug">{{infobit.id}}</span>
+        <!--span class="debug">{{infobit.id}}</span-->
       </li>
     </ul>
   </div>

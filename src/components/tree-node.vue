@@ -8,7 +8,7 @@
         <span class="action-button fa fa-fw fa-level-up" @click="setSubtreeFilter"></span>
         <span class="action-button fa fa-fw fa-remove" @click="remove"></span>
       </infobit>
-      <span class="debug">{{node.id}}</span>
+      <!--span class="debug">{{node.id}}</span-->
     </div>
     <!-- Child nodes -->
     <ul class="child-nodes" v-if="hasChilds && !isCollapsed" v-dragula="node.nodes" bag="infobits">
